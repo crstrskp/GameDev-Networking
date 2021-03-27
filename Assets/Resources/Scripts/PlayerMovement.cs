@@ -14,11 +14,10 @@ public class PlayerMovement : MonoBehaviourPun
     [SerializeField] private float DistToGround = 0.9f;
 
     [SerializeField] private CharacterController m_characterController;
-    [SerializeField] private Camera m_playerCamera;
-
     [SerializeField] Transform m_modelTransform;
-
     [SerializeField] private bool m_useBlendTree; 
+    
+    private Camera m_playerCamera;
 
     public event Action Jumping;  
     public event Action Landing; 
@@ -37,11 +36,26 @@ public class PlayerMovement : MonoBehaviourPun
 
     public bool isFalling() => m_isFalling;
 
+    private void Awake() => InitCamera();
+
+
     private void Update() 
     {
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
             return;
+        }
+
+        if (m_playerCamera == null)
+        {
+            InitCamera();
+            if (m_playerCamera == null)
+            {
+                Debug.LogError("Camera not found!");
+                return;
+            }
+
+            Debug.Log("Camera found");
         }
 
         SetSprinting();
@@ -172,6 +186,12 @@ public class PlayerMovement : MonoBehaviourPun
     }
 
     public bool IsGrounded() => Physics.Raycast(transform.position, -Vector3.up, DistToGround + 0.01f);
+
+    private void InitCamera()
+    {
+        if (m_playerCamera == null)
+            m_playerCamera = GetComponentInChildren<Camera>();
+    }
     
     private void OnDrawGizmos() 
     {

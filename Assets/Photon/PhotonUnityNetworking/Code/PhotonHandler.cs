@@ -349,7 +349,6 @@ namespace Photon.Pun
             {
                 PhotonNetwork.OwnershipUpdate(reusableIntList.ToArray(), newPlayer.ActorNumber);
             }
-
         }
 
         public void OnPlayerLeftRoom(Player otherPlayer)

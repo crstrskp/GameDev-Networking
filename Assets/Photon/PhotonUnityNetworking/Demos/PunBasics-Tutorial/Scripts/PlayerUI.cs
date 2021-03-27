@@ -102,11 +102,7 @@ namespace Photon.Pun.Demo.PunBasics
 				
 				this.transform.position = Camera.main.WorldToScreenPoint (targetPosition) + screenOffset;
 			}
-
 		}
-
-
-
 
 		#endregion
 
