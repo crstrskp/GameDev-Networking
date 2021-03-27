@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class PlayerHealthDisplay : MonoBehaviour
+public class PlayerHealthDisplay : MonoBehaviourPun
 {
     [Tooltip("UI Text to display Player's Name")]
     [SerializeField] private Text playerNameText;
@@ -11,10 +12,13 @@ public class PlayerHealthDisplay : MonoBehaviour
     [Tooltip("Pixel offset from the player target")]
     [SerializeField] private Vector3 screenOffset = new Vector3(0f, 30f, 0f);
 
-    // [SerializeField] private PlayerHandler m_playerHandler;
     
     [Tooltip("UI Slider to display Player's Health")]
     [SerializeField] private Slider playerHealthSlider;
+
+
+    private PlayerHandler m_playerHandler;
+    private Health m_health;
 
     private PlayerHandler target; 
     private Transform targetTransform;
@@ -23,25 +27,27 @@ public class PlayerHealthDisplay : MonoBehaviour
     private float characterControllerHeight;
     private Vector3 targetPosition;
 
-
-
-    /// <summary>
-    /// MonoBehaviour method called on GameObject by Unity during early initialization phase
-    /// </summary>
     void Awake()
     {
-
         _canvasGroup = this.GetComponent<CanvasGroup>();
-        
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+    }
+
+    void OnDestroy() => m_health.HealthChanged -= UpdateHealth;
+
+    private void UpdateHealth(int currentHealth, int maxHealth)
+    {
+        playerHealthSlider.minValue = 0;
+        playerHealthSlider.maxValue = maxHealth;
+        playerHealthSlider.value = currentHealth;
     }
 
     /// <summary>
     /// MonoBehaviour method called after all Update functions have been called. This is useful to order script execution.
     /// In our case since we are following a moving GameObject, we need to proceed after the player was moved during a particular frame.
     /// </summary>
-    void LateUpdate () {
-
+    void LateUpdate () 
+    {
         // Do not show the UI if we are not visible to the camera, thus avoid potential bugs with seeing the UI, but not the player itself.
         if (targetRenderer!=null)
         {
@@ -63,8 +69,8 @@ public class PlayerHealthDisplay : MonoBehaviour
     /// Assigns a Player Target to Follow and represent.
     /// </summary>
     /// <param name="target">Target.</param>
-    public void SetTarget(PlayerHandler _target){
-
+    public void SetTarget(PlayerHandler _target)
+    {
         if (_target == null) {
             Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
             return;

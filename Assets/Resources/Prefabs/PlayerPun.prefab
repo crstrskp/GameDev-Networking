@@ -78,7 +78,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerUIPrefab: {fileID: 170056, guid: 1fa7389f427a9bf49a6c7077a26ba259, type: 3}
-  m_playerCamera: {fileID: 5066056848955781667, guid: b7eae9b5810504a4490b902372d94613, type: 3}
+  m_cameraPrefab: {fileID: 5066056848955781667, guid: b7eae9b5810504a4490b902372d94613, type: 3}
+  camera: {fileID: 0}
+  m_health: {fileID: 3687271628521638821}
 --- !u!114 &189003930571459136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +121,20 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3687271628521638821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560656920239496129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d108972c6cf792e488b3f94307a38871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentHealth: 0
+  m_maxHealth: 100
 --- !u!1001 &7546150423157682030
 PrefabInstance:
   m_ObjectHideFlags: 0

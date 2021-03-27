@@ -8,19 +8,21 @@ public class PlayerHandler : MonoBehaviourPun
     
     [SerializeField] private GameObject m_playerUIPrefab;
 
-    [SerializeField] private GameObject m_playerCamera;
+    [SerializeField] private GameObject m_cameraPrefab;
+    [HideInInspector] public GameObject camera;
+    [SerializeField] private Health m_health;
     private void Start()
     {
         CreatePlayerCamera();
 
-        CreateUI();
+       CreateUI();
     }
 
     private void CreatePlayerCamera()
     {
-        if (this.m_playerCamera != null)
+        if (this.m_cameraPrefab != null)
         {
-            GameObject playerCam = Instantiate(this.m_playerCamera, transform);
+            this.camera = Instantiate(this.m_cameraPrefab, transform);
         }
         else 
         {
@@ -33,7 +35,8 @@ public class PlayerHandler : MonoBehaviourPun
         if (this.m_playerUIPrefab != null)
         {
             GameObject _uiGo = Instantiate(this.m_playerUIPrefab);
-            _uiGo.GetComponent<PlayerHealthDisplay>().SetTarget(this);
+            var healthDisplay = _uiGo.GetComponent<PlayerHealthDisplay>();
+            healthDisplay.SetTarget(this);
         }
         else
         {
