@@ -1,6 +1,7 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class WowCamera : MonoBehaviour
+public class WowCamera : MonoBehaviourPun
 {
     public Transform Target { get; set; }
 
@@ -52,16 +53,21 @@ public class WowCamera : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
     }
 
-    private void Update()
-    {
-        m_freeLookMode = Input.GetKey(KeyCode.LeftAlt);
-    }
+    // private void Update()
+    // {
+    //     m_freeLookMode = Input.GetKey(KeyCode.LeftAlt);
+    // }
 
     /**
      * Camera logic on LateUpdate to only update after all character movement logic has been handled.
      */
     void LateUpdate()
     {
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        {
+            return;
+        }
+
         Vector3 vTargetOffset;
 
         if (!Target) return;

@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerAttackInput : MonoBehaviour
+public class PlayerAttackInput : MonoBehaviourPun
 {
     public event Action StrafeStart;
     public event Action StrafeEnd;
@@ -11,6 +12,11 @@ public class PlayerAttackInput : MonoBehaviour
 
     void Update()
     {
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             StrafeStart?.Invoke();

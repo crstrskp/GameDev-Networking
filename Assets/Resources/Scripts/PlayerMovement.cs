@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
      private const float gravity = -9.82f;
     [SerializeField] private float WalkSpeed = 1.5f;
@@ -38,29 +39,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() 
     {
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        {
+            return;
+        }
+
         SetSprinting();
         AxesMovement();
         YOrientation();
         
-        if (m_characterController.velocity.y > .25f)
+        if (m_characterController.velocity.y < -.25f)
         {
-            Debug.Log("Rising");
-        }
-        else if (m_characterController.velocity.y < -.25f)
-        {
-            Debug.Log("Falling");
+            // Debug.Log("Falling");
             m_isFalling = true;
         }
 
         if (!IsGrounded() && wasGrounded)
         {
-            Debug.Log("LIFT OFF!");
+            // Debug.Log("LIFT OFF!");
         }
         else if (IsGrounded() && !wasGrounded)
         {
             m_isFalling = false;
             Landing?.Invoke();  
-            Debug.Log("Landing");
+            // Debug.Log("Landing");
         }
 
         wasGrounded = IsGrounded();
