@@ -79,7 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerUIPrefab: {fileID: 170056, guid: 1fa7389f427a9bf49a6c7077a26ba259, type: 3}
   m_cameraPrefab: {fileID: 5066056848955781667, guid: b7eae9b5810504a4490b902372d94613, type: 3}
-  camera: {fileID: 0}
   m_health: {fileID: 3687271628521638821}
 --- !u!114 &189003930571459136
 MonoBehaviour:

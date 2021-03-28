@@ -29,6 +29,14 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(m_currentHealth, m_maxHealth);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            TakeDamage(6);
+        }
+    }
+
     // public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
     //             if (stream.isWriting) {
     //                 stream.SendNext ();

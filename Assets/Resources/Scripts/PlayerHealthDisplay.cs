@@ -33,6 +33,13 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
     }
 
+    private void InitHealth() 
+    {
+        m_health = m_playerHandler.GetHealth();
+        m_health.HealthChanged += UpdateHealth;
+        m_health.TakeDamage(0);
+    } 
+
     void OnDestroy() => m_health.HealthChanged -= UpdateHealth;
 
     private void UpdateHealth(int currentHealth, int maxHealth)
@@ -48,6 +55,9 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     /// </summary>
     void LateUpdate () 
     {
+        if (!m_health) InitHealth();
+
+
         // Do not show the UI if we are not visible to the camera, thus avoid potential bugs with seeing the UI, but not the player itself.
         if (targetRenderer!=null)
         {
@@ -64,6 +74,8 @@ public class PlayerHealthDisplay : MonoBehaviourPun
             this.transform.position = Camera.main.WorldToScreenPoint (targetPosition) + screenOffset;
         }
     }
+
+    public void SetPlayerHandler(PlayerHandler handler) => m_playerHandler = handler;
 
    	/// <summary>
     /// Assigns a Player Target to Follow and represent.
