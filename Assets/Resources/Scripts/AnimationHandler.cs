@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class AnimationHandler : MonoBehaviour
+public class AnimationHandler : MonoBehaviourPun
 {
     [SerializeField] private Animator m_anim;
     [SerializeField] private PlayerMovement playerMovement;
@@ -11,6 +12,8 @@ public class AnimationHandler : MonoBehaviour
 
     private void Awake() 
     {
+        if (!photonView.IsMine) return;
+
         playerMovement.Jumping += SetJumpAnimation;    
         playerMovement.Landing += SetLandingAnimation;
         playerAttack.Attack += SetAttackAnimation;
@@ -19,6 +22,8 @@ public class AnimationHandler : MonoBehaviour
 
     private void LateUpdate() 
     {
+        if (!photonView.IsMine) return;
+
         SetAnimationVariables();
     }
     

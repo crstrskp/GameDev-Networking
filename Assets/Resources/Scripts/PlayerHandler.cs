@@ -5,8 +5,10 @@ using Photon.Pun;
 
 public class PlayerHandler : MonoBehaviourPun
 {
-    
     [SerializeField] private GameObject m_playerUIPrefab;
+
+    [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
+    public static GameObject LocalPlayerInstance;
 
     [SerializeField] private GameObject m_cameraPrefab;
     [SerializeField] private Health m_health;
@@ -16,11 +18,27 @@ public class PlayerHandler : MonoBehaviourPun
 
     public Health GetHealth() => m_health;
 
+    private void Awake() 
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+
+        // #Critical
+        // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
+        DontDestroyOnLoad(gameObject);
+
+    }
+
     private void Start()
     {
-        CreatePlayerCamera();
-
-       CreateUI();
+        if (!photonView.IsMine) return;
+        
+        if (this.m_camera == null)
+            CreatePlayerCamera();
+        if (m_playerHealthDisplay == null) 
+            CreateUI();
     }
 
     private void CreatePlayerCamera()

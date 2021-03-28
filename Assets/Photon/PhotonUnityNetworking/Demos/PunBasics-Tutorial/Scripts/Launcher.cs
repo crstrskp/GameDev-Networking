@@ -60,9 +60,7 @@ namespace Photon.Pun.Demo.PunBasics
 
 		#region MonoBehaviour CallBacks
 
-		/// <summary>
-		/// MonoBehaviour method called on GameObject by Unity during early initialization phase.
-		/// </summary>
+		
 		void Awake()
 		{
 			if (loaderAnime==null)
@@ -211,8 +209,7 @@ namespace Photon.Pun.Demo.PunBasics
 			// #Critical: We only load if we are the first player, else we rely on  PhotonNetwork.AutomaticallySyncScene to sync our instance scene.
 			if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
 			{
-				Debug.Log("We load the 'Room for 1' ");
-
+				Debug.Log("Loading arena01");
 				// #Critical
 				// Load the Room Level. 
 				PhotonNetwork.LoadLevel("Arena01");

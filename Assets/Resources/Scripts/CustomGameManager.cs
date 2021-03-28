@@ -1,13 +1,3 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Launcher.cs" company="Exit Games GmbH">
-//   Part of: Photon Unity Networking Demos
-// </copyright>
-// <summary>
-//  Used in "PUN Basic tutorial" to handle typical game management requirements
-// </summary>
-// <author>developer@exitgames.com</author>
-// --------------------------------------------------------------------------------------------------------------------
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,12 +13,12 @@ namespace Photon.Pun.Demo.PunBasics
 	/// Deals with quiting the room and the game
 	/// Deals with level loading (outside the in room synchronization)
 	/// </summary>
-	public class GameManager : MonoBehaviourPunCallbacks
+	public class CustomGameManager : MonoBehaviourPunCallbacks
     {
 
 		#region Public Fields
 
-		static public GameManager Instance;
+		static public CustomGameManager Instance;
 
 		#endregion
 
@@ -65,8 +55,7 @@ namespace Photon.Pun.Demo.PunBasics
 			} 
 			else 
 			{
-				if (PlayerManager.LocalPlayerInstance==null)
-				// if (photonView.GetComponent<PlayerHandler>().LocalPlayerInstance == null)
+				if (PlayerHandler.LocalPlayerInstance==null)
 				{
 				    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
 
