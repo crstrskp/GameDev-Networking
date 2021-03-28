@@ -44,6 +44,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
 
     private void UpdateHealth(int currentHealth, int maxHealth)
     {
+        
         playerHealthSlider.minValue = 0;
         playerHealthSlider.maxValue = maxHealth;
         playerHealthSlider.value = currentHealth;
@@ -57,6 +58,8 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     {
         if (!m_health) InitHealth();
 
+        if (playerHealthSlider.value != m_health.GetCurrentHealth())
+            UpdateHealth(m_health.GetCurrentHealth(), m_health.GetMaxHealth());
 
         // Do not show the UI if we are not visible to the camera, thus avoid potential bugs with seeing the UI, but not the player itself.
         if (targetRenderer!=null)
