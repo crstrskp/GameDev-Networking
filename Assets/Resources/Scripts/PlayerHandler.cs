@@ -31,14 +31,21 @@ public class PlayerHandler : MonoBehaviourPun
 
     }
 
+    private void LateUpdate()
+    {
+        if (m_playerHealthDisplay == null)
+            CreateUI();
+    }
+
     private void Start()
     {
-        if (!photonView.IsMine) return;
-        
-        if (this.m_camera == null)
-            CreatePlayerCamera();
         if (m_playerHealthDisplay == null) 
             CreateUI();
+
+        if (!photonView.IsMine) return;
+
+        if (this.m_camera == null)
+            CreatePlayerCamera();
     }
 
     private void CreatePlayerCamera()

@@ -37,7 +37,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     {
         m_health = m_playerHandler.GetHealth();
         m_health.HealthChanged += UpdateHealth;
-        m_health.TakeDamage(0);
+        m_health.Heal(0);
     } 
 
     void OnDestroy() => m_health.HealthChanged -= UpdateHealth;
