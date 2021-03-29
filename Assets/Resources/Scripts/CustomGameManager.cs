@@ -85,10 +85,6 @@ namespace Photon.Pun.Demo.PunBasics
 
         #region Photon Callbacks
 
-        /// <summary>
-        /// Called when a Photon Player got connected. We need to then load a bigger scene.
-        /// </summary>
-        /// <param name="other">Other.</param>
         public override void OnPlayerEnteredRoom( Player other  )
 		{
 			Debug.Log( "OnPlayerEnteredRoom() " + other.NickName); // not seen if you're the player connecting
@@ -101,10 +97,6 @@ namespace Photon.Pun.Demo.PunBasics
 			}
 		}
 
-		/// <summary>
-		/// Called when a Photon Player got disconnected. We need to load a smaller scene.
-		/// </summary>
-		/// <param name="other">Other.</param>
 		public override void OnPlayerLeftRoom( Player other  )
 		{
 			Debug.Log( "OnPlayerLeftRoom() " + other.NickName ); // seen when other disconnects

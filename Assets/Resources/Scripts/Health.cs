@@ -7,6 +7,7 @@ using Photon.Pun;
 public class Health : MonoBehaviourPunCallbacks, IPunObservable
 {
     public event Action<int, int> HealthChanged;
+    public event Action OnDeath;
 
     [SerializeField] private int m_currentHealth;
     [SerializeField] private int m_maxHealth = 100;
@@ -40,6 +41,11 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+        if (m_currentHealth <= 0)
+        {
+            OnDeath?.Invoke();
+        }
+
         if (!photonView.IsMine) return; 
 
         if (Input.GetKeyDown(KeyCode.K))

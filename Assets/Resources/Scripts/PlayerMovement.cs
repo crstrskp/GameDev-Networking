@@ -51,11 +51,8 @@ public class PlayerMovement : MonoBehaviourPun
             InitCamera();
             if (m_playerCamera == null)
             {
-                Debug.LogError("Camera not found!");
                 return;
             }
-
-            Debug.Log("Camera found");
         }
 
         SetSprinting();

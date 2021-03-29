@@ -29,6 +29,7 @@ public class PlayerHandler : MonoBehaviourPun
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
         DontDestroyOnLoad(gameObject);
 
+        if (!photonView.IsMine) return;
     }
 
     private void LateUpdate()

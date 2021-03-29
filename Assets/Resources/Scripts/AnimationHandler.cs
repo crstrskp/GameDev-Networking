@@ -10,6 +10,8 @@ public class AnimationHandler : MonoBehaviourPun
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerAttackInput playerAttack;
 
+    public event Action Attack;
+
     private void Awake() 
     {
         if (!photonView.IsMine) return;
@@ -51,6 +53,11 @@ public class AnimationHandler : MonoBehaviourPun
     private void SetLandingAnimation() => m_anim.SetTrigger("Landing");
 
     private void SetAttackAnimation() => m_anim.SetTrigger("Attack");
+
+    public void Hit()
+    {
+        Attack?.Invoke();
+    }
 
 
     #region cleanup
