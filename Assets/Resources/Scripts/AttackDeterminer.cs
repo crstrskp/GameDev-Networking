@@ -11,6 +11,7 @@ public class AttackDeterminer : StateMachineBehaviour
     {
         i = i < (numberOfAnims - 1) ? i + 1 : 0;
         animator.SetInteger("SlashAttack", i);
+        //animator.gameObject.GetComponent<PlayerWeaponHandler>().SetAttacking(true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
