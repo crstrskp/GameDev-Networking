@@ -92,7 +92,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220633678843950}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.88841945, z: 0.04858852}
@@ -110,8 +110,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemType: 0
+  WeaponType: 0
   ItemArmorType: 0
   rigidbody: {fileID: -3548546961706124796}
+  IsAttacking: 0
   m_baseDamage: 15
   HoldPoint: {fileID: 0}
 --- !u!54 &-3548546961706124796

@@ -5,17 +5,22 @@ using UnityEngine;
 public class ItemPickUp : MonoBehaviour
 {
     public enum ItemTypeDefinitions {  WEAPON, SHIELD, ARMOR };
+    public enum WeaponSubType { Melee, Ranged, Other }
     public enum ItemArmorSubType { None, Head, Chest, Hands, Legs, Boots };
 
     public ItemTypeDefinitions ItemType = ItemTypeDefinitions.WEAPON;
+    public WeaponSubType WeaponType = WeaponSubType.Melee;
     public ItemArmorSubType ItemArmorType = ItemArmorSubType.None;
 
     public Rigidbody rigidbody;
+
+    public bool AttackActive = false;
+
+    [SerializeField] private Transform HoldPoint;
+    [SerializeField] private int m_baseDamage = 15;
+    [SerializeField] private int m_criticalHitChance = 15;
+    [SerializeField] private GameObject Owner; 
     
-    [SerializeField] private int m_baseDamage;
-
-    public Transform HoldPoint;
-
     //public void Drop()
     //{
     //    Debug.Log("TODO: [RPC] Drop()");
@@ -30,33 +35,42 @@ public class ItemPickUp : MonoBehaviour
     //    if (transform.parent != null) return;
 
     //    m_rigidbody.isKinematic = true;
-        
+
     //    if (ItemType == ItemTypeDefinitions.WEAPON)
     //    {
     //        if (playerWeaponHandler.EquippedWeapon == null)
     //        {
     //            playerWeaponHandler.EquippedWeapon = this;
     //            transform.parent = playerWeaponHandler.RightHandTransform;
+    //            Owner = playerWeaponHandler.gameObject;
     //        }
     //        else
     //        {
     //        }
     //    }
     //}
-    
-    public void ExecuteAttack()
+
+    void OnTriggerEnter(Collider col)
     {
-        if (ItemType != ItemTypeDefinitions.WEAPON) return;
+        if (WeaponType != WeaponSubType.Melee) return;
+        
+        if (AttackActive == false) return;
 
-        Debug.Log("TODO: [RPC] ExecuteAttack");
+        var attackable = col.gameObject.GetComponent<IAttackable>();
+        
+        if (attackable == null) return;
 
-        var isCritical = false; // TODO: Determine critical! 
+        var isCritical = DetermineCritical();
 
-        Debug.Log($"Executing attack from: {gameObject.name}");
-        Attack attack = new Attack(m_baseDamage, isCritical);
+        var attack = new Attack(m_baseDamage, isCritical);
 
-        Debug.Log("TODO apply attack to target!");
+        Debug.Log($"{Owner.name} attacks {col.gameObject.name}, damage: {attack.Damage}, isCritical: {isCritical}");
+        
+        attackable.OnAttack(Owner, attack);
     }
+
+    private bool DetermineCritical() => (UnityEngine.Random.Range(0, 100) < m_criticalHitChance);
+        
 
     //public void ThrowItem()
     //{

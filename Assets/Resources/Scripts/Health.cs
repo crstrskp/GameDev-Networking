@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Health : MonoBehaviourPunCallbacks, IPunObservable
+public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 {
     public event Action<int, int> HealthChanged;
     public event Action OnDeath;
@@ -17,7 +17,7 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
-        if (!photonView.IsMine) return; 
+        if (!photonView.IsMine) return;
 
         m_currentHealth = m_maxHealth;
         HealthChanged?.Invoke(m_currentHealth, m_maxHealth);
@@ -25,28 +25,28 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(float damage)
     {
-        if (!photonView.IsMine) return; 
-        
+        if (!photonView.IsMine) return;
+
         m_currentHealth = (int)Mathf.Max(m_currentHealth - damage, 0);
         HealthChanged?.Invoke(m_currentHealth, m_maxHealth);
     }
 
     public void Heal(float heal)
     {
-        if (!photonView.IsMine) return; 
-        
+        if (!photonView.IsMine) return;
+
         m_currentHealth = (int)Mathf.Min(m_currentHealth + heal, m_maxHealth);
         HealthChanged?.Invoke(m_currentHealth, m_maxHealth);
     }
 
     private void Update()
     {
+        if (!photonView.IsMine) return;
+        
         if (m_currentHealth <= 0)
         {
             OnDeath?.Invoke();
         }
-
-        if (!photonView.IsMine) return; 
 
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -66,5 +66,16 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
             // Network player, receive data
             this.m_currentHealth = (int)stream.ReceiveNext();
         }
+    }
+
+    public void OnAttack(GameObject attacker, Attack attack)
+    {
+        if (attacker == gameObject)
+        {
+            Debug.Log("Can't hit self - cancelling attack");
+            return; // can't hit self
+        }
+
+        TakeDamage(attack.Damage);
     }
 }

@@ -8,9 +8,12 @@ public class AnimationHandler : MonoBehaviourPun
 {
     [SerializeField] private Animator m_anim;
     [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private PlayerAttackInput playerAttack;
+    [SerializeField] private PlayerAttackInput m_playerAttackInput;
+    [SerializeField] private PlayerWeaponHandler m_playerWeaponHandler;
 
-    public event Action Attack;
+    //public event Action Attack;
+    public event Action AttackStarted;
+    public event Action AttackEnded;
 
     private void Awake() 
     {
@@ -18,9 +21,8 @@ public class AnimationHandler : MonoBehaviourPun
 
         playerMovement.Jumping += SetJumpAnimation;    
         playerMovement.Landing += SetLandingAnimation;
-        playerAttack.Attack += SetAttackAnimation;
+        m_playerAttackInput.Attack += SetAttackAnimation;
     }
-
 
     private void LateUpdate() 
     {
@@ -52,11 +54,28 @@ public class AnimationHandler : MonoBehaviourPun
 
     private void SetLandingAnimation() => m_anim.SetTrigger("Landing");
 
-    private void SetAttackAnimation() => m_anim.SetTrigger("Attack");
-
-    public void Hit()
+    private void SetAttackAnimation()
     {
-        Attack?.Invoke();
+        if (m_playerWeaponHandler.IsAttacking)
+        {
+            Debug.Log("Already attacking - ignoring input");
+            return;
+        }
+
+        m_anim.SetTrigger("Attack");
+        m_playerWeaponHandler.IsAttacking = true;
+    }
+
+    private void AttackStart()
+    {
+        if (m_playerWeaponHandler.EquippedWeapon && m_playerWeaponHandler.EquippedWeapon.AttackActive) return;
+
+        AttackStarted?.Invoke();
+    }
+
+    private void AttackEnd()
+    {
+        AttackEnded?.Invoke();
     }
 
 
@@ -66,7 +85,7 @@ public class AnimationHandler : MonoBehaviourPun
     {
         playerMovement.Jumping -= SetJumpAnimation;    
         playerMovement.Landing -= SetLandingAnimation;
-        playerAttack.Attack -= SetAttackAnimation;
+        m_playerAttackInput.Attack -= SetAttackAnimation;
     }
     #endregion
 }

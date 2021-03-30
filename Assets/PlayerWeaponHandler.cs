@@ -7,6 +7,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     [SerializeField] private PlayerAttackInput m_playerAttackInput;
     [SerializeField] private Health m_health;
+    [SerializeField] private AnimationHandler m_animHandler;
 
     public Transform LeftHandTransform;
     public Transform RightHandTransform;
@@ -15,12 +16,12 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     public ItemPickUp[] WeaponSlots = new ItemPickUp[6];
 
-    [SerializeField] private AnimationHandler m_animHandler;
-
+    public bool IsAttacking = false;
 
     private void Awake()
     {
-        m_animHandler.Attack += Attack;
+        m_animHandler.AttackStarted += AttackStart;
+        m_animHandler.AttackEnded += AttackEnd;
 
         m_playerAttackInput.WeaponSelect += TryChangeWeapon;
         m_playerAttackInput.DropEquipped += DropEquipped;
@@ -31,8 +32,9 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        m_animHandler.Attack -= Attack;
-        
+        m_animHandler.AttackStarted -= AttackStart;
+        m_animHandler.AttackEnded -= AttackEnd;
+
         m_playerAttackInput.WeaponSelect -= TryChangeWeapon;
         m_playerAttackInput.DropEquipped -= DropEquipped;
         m_playerAttackInput.ThrowEquipped -= ThrowItem;
@@ -55,16 +57,16 @@ public class PlayerWeaponHandler : MonoBehaviour
     {
         if (EquippedWeapon != null)
         {
-            //EquippedWeapon.Drop();
             EquippedWeapon.rigidbody.isKinematic = false;
             EquippedWeapon.transform.parent = null;
+            EquippedWeapon.GetComponent<Collider>().isTrigger = false;
             EquippedWeapon = null;
         }
         else if (EquippedShield != null)
         {
-            //EquippedShield.Drop();
             EquippedShield.rigidbody.isKinematic = false;
             EquippedShield.transform.parent = null;
+            EquippedShield.GetComponent<Collider>().isTrigger = false;
             EquippedShield = null;
         }
     }
@@ -79,20 +81,25 @@ public class PlayerWeaponHandler : MonoBehaviour
             if (WeaponSlots[i] != null)
             {
                 WeaponSlots[i].transform.parent = null;
+                WeaponSlots[i].GetComponent<Collider>().isTrigger = false;
                 WeaponSlots[i].rigidbody.isKinematic = false;
                 WeaponSlots[i] = null;
             }
         }
     }
 
-    private void Attack()
+    private void AttackStart()
     {
-        Debug.Log("Attacking from PlayerHandler");
-
-        if (EquippedWeapon == null) return;
-        EquippedWeapon.ExecuteAttack();
+        Debug.Log("AttackStart()");
+        EquippedWeapon.AttackActive = true;
     }
 
+    private void AttackEnd()
+    {
+        Debug.Log("AttackEnd()");
+        EquippedWeapon.AttackActive = false;
+        IsAttacking = false;
+    }
 
     private void ThrowItem()
     {
