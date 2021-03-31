@@ -7,13 +7,16 @@ using Photon.Pun;
 public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 {
     public event Action<int, int> HealthChanged;
-    public event Action OnDeath;
+    //public event Action OnDeath;
 
     [SerializeField] private int m_currentHealth;
     [SerializeField] private int m_maxHealth = 100;
 
     public int GetCurrentHealth() => m_currentHealth;
     public int GetMaxHealth() => m_maxHealth;
+
+    private GameObject m_lastAttacker;
+    public GameObject GetLastAttacker() => m_lastAttacker;
 
     private void Awake()
     {
@@ -43,14 +46,14 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
     {
         if (!photonView.IsMine) return;
         
-        if (m_currentHealth <= 0)
-        {
-            OnDeath?.Invoke();
-        }
+        //if (m_currentHealth <= 0)
+        //{
+        //    OnDeath?.Invoke();
+        //}
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            TakeDamage(6);
+            TakeDamage(15);
         }
     }
 
@@ -70,12 +73,16 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 
     public void OnAttack(GameObject attacker, Attack attack)
     {
-        if (attacker == gameObject)
-        {
-            Debug.Log("Can't hit self - cancelling attack");
-            return; // can't hit self
-        }
+        if (attacker == gameObject) return; // can't hit self. 
 
         TakeDamage(attack.Damage);
+
+        if (m_currentHealth <= 0)
+        {
+            // Destroy Object
+            var destructibles = GetComponents(typeof(IDestructible));
+            foreach (IDestructible d in destructibles)
+                d.OnDestruction(attacker);
+        }
     }
 }

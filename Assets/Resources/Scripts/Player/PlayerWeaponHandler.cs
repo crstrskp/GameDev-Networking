@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponHandler : MonoBehaviour
+public class PlayerWeaponHandler : MonoBehaviour, IDestructible
 {
-
     [SerializeField] private PlayerAttackInput m_playerAttackInput;
-    [SerializeField] private Health m_health;
+    //[SerializeField] private Health m_health;
     [SerializeField] private AnimationHandler m_animHandler;
 
     public Transform LeftHandTransform;
@@ -26,8 +23,6 @@ public class PlayerWeaponHandler : MonoBehaviour
         m_playerAttackInput.WeaponSelect += TryChangeWeapon;
         m_playerAttackInput.DropEquipped += DropEquipped;
         m_playerAttackInput.ThrowEquipped += ThrowItem;
-
-        m_health.OnDeath += DropItemsOnDeath;
     }
 
     private void OnDestroy()
@@ -38,19 +33,15 @@ public class PlayerWeaponHandler : MonoBehaviour
         m_playerAttackInput.WeaponSelect -= TryChangeWeapon;
         m_playerAttackInput.DropEquipped -= DropEquipped;
         m_playerAttackInput.ThrowEquipped -= ThrowItem;
-
-        m_health.OnDeath -= DropItemsOnDeath;
     }
 
     private void TryChangeWeapon(int weaponSlot)
     {
-        if (WeaponSlots[weaponSlot - 1] != null)
-        {
-            if (WeaponSlots[weaponSlot - 1] == EquippedWeapon) return;
+        if (WeaponSlots[weaponSlot - 1] == null) return;
 
+        if (WeaponSlots[weaponSlot - 1] == EquippedWeapon) return;
 
-            EquippedWeapon = WeaponSlots[weaponSlot - 1];
-        }
+        EquippedWeapon = WeaponSlots[weaponSlot - 1];
     }
 
     private void DropEquipped()
@@ -125,5 +116,10 @@ public class PlayerWeaponHandler : MonoBehaviour
         // else
         // populate weaponSlot
 
+    }
+
+    public void OnDestruction(GameObject destroyer)
+    {
+        DropItemsOnDeath();
     }
 }
