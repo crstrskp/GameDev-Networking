@@ -187,7 +187,7 @@ public class PlayerMovement : MonoBehaviourPun
     private void InitCamera()
     {
         if (m_playerCamera == null)
-            m_playerCamera = GetComponentInChildren<Camera>();
+            m_playerCamera = transform.parent.GetComponentInChildren<Camera>();
     }
     
     private void OnDrawGizmos() 

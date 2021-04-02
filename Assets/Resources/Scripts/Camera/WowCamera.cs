@@ -24,6 +24,8 @@ public class WowCamera : MonoBehaviourPun
 
     [SerializeField] private LayerMask collisionLayers = -1;
 
+    [SerializeField] private Transform m_target;
+
     private float xDeg = 0.0f;
     private float yDeg = 0.0f;
     private float currentDistance;
@@ -33,8 +35,9 @@ public class WowCamera : MonoBehaviourPun
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        Target = m_target ? m_target : transform.parent;
         
-        Target = transform.parent;
         Vector3 angles = transform.eulerAngles;
         xDeg = angles.x;
         yDeg = angles.y;
