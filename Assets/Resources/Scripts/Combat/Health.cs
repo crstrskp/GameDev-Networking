@@ -7,7 +7,6 @@ using Photon.Pun;
 public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 {
     public event Action<int, int> HealthChanged;
-    //public event Action OnDeath;
 
     [SerializeField] private int m_currentHealth;
     [SerializeField] private int m_maxHealth = 100;
@@ -42,21 +41,6 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
         HealthChanged?.Invoke(m_currentHealth, m_maxHealth);
     }
 
-    private void Update()
-    {
-        if (!photonView.IsMine) return;
-        
-        //if (m_currentHealth <= 0)
-        //{
-        //    OnDeath?.Invoke();
-        //}
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(15);
-        }
-    }
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -73,6 +57,8 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 
     public void OnAttack(GameObject attacker, Attack attack)
     {
+        //if (!photonView.IsMine) return;
+
         if (attacker == gameObject) return; // can't hit self. 
 
         TakeDamage(attack.Damage);
@@ -83,6 +69,10 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
             var destructibles = GetComponents(typeof(IDestructible));
             foreach (IDestructible d in destructibles)
                 d.OnDestruction(attacker);
+
+            var playerHandler = transform.parent.GetComponent<PlayerHandler>();
+            playerHandler.DelayedRespawn();
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

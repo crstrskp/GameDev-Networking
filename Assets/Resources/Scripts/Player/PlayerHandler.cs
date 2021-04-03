@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
 
 public class PlayerHandler : MonoBehaviourPun
 {
-    [SerializeField] private GameObject m_playerUIPrefab;
+    
 
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
+    [SerializeField] private float m_respawnTime = 2.5f;
     [SerializeField] private GameObject m_cameraPrefab;
-    [SerializeField] private Health m_health;
+    public GameObject PlayerObject;
 
-    private PlayerHealthDisplay m_playerHealthDisplay;
     private GameObject m_camera;
-
-    public Health GetHealth() => m_health;
 
     private void Awake() 
     {
@@ -28,21 +27,10 @@ public class PlayerHandler : MonoBehaviourPun
         // #Critical
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
         DontDestroyOnLoad(gameObject);
-
-        if (!photonView.IsMine) return;
-    }
-
-    private void LateUpdate()
-    {
-        if (m_playerHealthDisplay == null)
-            CreateUI();
     }
 
     private void Start()
     {
-        if (m_playerHealthDisplay == null) 
-            CreateUI();
-
         if (!photonView.IsMine) return;
 
         if (this.m_camera == null)
@@ -53,7 +41,10 @@ public class PlayerHandler : MonoBehaviourPun
     {
         if (this.m_cameraPrefab != null)
         {
+            if (m_camera != null) return;
+
             this.m_camera = Instantiate(this.m_cameraPrefab, transform);
+            m_camera.GetComponent<WowCamera>().Target = PlayerObject.transform;
         }
         else 
         {
@@ -61,18 +52,28 @@ public class PlayerHandler : MonoBehaviourPun
         }
     }
 
-    private void CreateUI()
+    public void SpawnPlayer()
     {
-        if (this.m_playerUIPrefab != null)
-        {
-            GameObject _uiGo = Instantiate(this.m_playerUIPrefab);
-            m_playerHealthDisplay = _uiGo.GetComponent<PlayerHealthDisplay>();
-            m_playerHealthDisplay.SetTarget(this);
-            m_playerHealthDisplay.SetPlayerHandler(this);
-        }
-        else
-        {
-            Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
-        }
+        var spawnPos = new Vector3(10, 10, 0);
+
+        PlayerObject = PhotonNetwork.Instantiate("PlayerPun2", spawnPos, Quaternion.identity);
+
+        var UIHandler = PlayerObject.GetComponent<UIHandler>();
+        Debug.Log($"UIHandler: {UIHandler}");
+
+        UIHandler.playerHealthDisplay.SetPlayerHandler(this);
+
+        m_camera.GetComponent<WowCamera>().Target = PlayerObject.transform;
+    }
+
+    public void DelayedRespawn()
+    {
+        StartCoroutine(SpawnAfterDelay(m_respawnTime));
+    }
+
+    private IEnumerator SpawnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SpawnPlayer();
     }
 }
