@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerWeaponHandler : MonoBehaviour, IDestructible
 {
     [SerializeField] private PlayerAttackInput m_playerAttackInput;
-    //[SerializeField] private Health m_health;
     [SerializeField] private AnimationHandler m_animHandler;
 
     public Transform LeftHandTransform;
@@ -81,13 +80,11 @@ public class PlayerWeaponHandler : MonoBehaviour, IDestructible
 
     private void AttackStart()
     {
-        Debug.Log("AttackStart()");
         EquippedWeapon.AttackActive = true;
     }
 
     private void AttackEnd()
     {
-        Debug.Log("AttackEnd()");
         EquippedWeapon.AttackActive = false;
         IsAttacking = false;
     }

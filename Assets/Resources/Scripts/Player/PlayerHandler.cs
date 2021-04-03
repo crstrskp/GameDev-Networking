@@ -6,8 +6,6 @@ using System;
 
 public class PlayerHandler : MonoBehaviourPun
 {
-    
-
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
@@ -55,17 +53,18 @@ public class PlayerHandler : MonoBehaviourPun
     public void SpawnPlayer()
     {
         var spawnPos = new Vector3(10, 10, 0);
+        //PlayerObject = (GameObject)Instantiate(Resources.Load("Prefabs\\Player\\PlayerPun"), spawnPos, Quaternion.identity);
+        if (!photonView.IsMine) return;
 
-        PlayerObject = PhotonNetwork.Instantiate("PlayerPun2", spawnPos, Quaternion.identity);
-
-        var UIHandler = PlayerObject.GetComponent<UIHandler>();
-        Debug.Log($"UIHandler: {UIHandler}");
-
-        UIHandler.playerHealthDisplay.SetPlayerHandler(this);
+        PlayerObject = PhotonNetwork.Instantiate("PlayerPun", spawnPos, Quaternion.identity);
+        Debug.Log($"PlayerObject spawned: {PlayerObject}");
+        PlayerObject.transform.parent = transform;
 
         m_camera.GetComponent<WowCamera>().Target = PlayerObject.transform;
+        Debug.Log($"Setting camera target to: {PlayerObject.transform.name}");
     }
 
+    [PunRPC]
     public void DelayedRespawn()
     {
         StartCoroutine(SpawnAfterDelay(m_respawnTime));

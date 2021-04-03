@@ -10,7 +10,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     [SerializeField] private Text playerNameText;
 
     [Tooltip("Pixel offset from the player target")]
-    [SerializeField] private Vector3 screenOffset = new Vector3(0f, 30f, 0f);
+    [SerializeField] private Vector3 screenOffset = new Vector3(0f, 8f, 0f);
 
     
     [Tooltip("UI Slider to display Player's Health")]
@@ -20,7 +20,6 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     private PlayerHandler m_playerHandler;
     private Health m_health;
 
-    private PlayerHandler target; 
     private Transform targetTransform;
     private Renderer targetRenderer;
     private CanvasGroup _canvasGroup;
@@ -35,7 +34,20 @@ public class PlayerHealthDisplay : MonoBehaviourPun
 
     private void InitHealth() 
     {
-        m_health = m_playerHandler.GetHealth();
+        if (m_playerHandler == null)
+        {
+            Debug.LogError("InitHealth(): PlayerHandler not found");
+            return;
+        }
+        
+        m_health = m_playerHandler.GetComponentInChildren<Health>();
+        
+        if (m_health == null)
+        {
+            Debug.LogError($"InitHealth(): Couldn't find Health component");
+            return;
+        }
+
         m_health.HealthChanged += UpdateHealth;
         m_health.Heal(0);
     } 
@@ -44,7 +56,6 @@ public class PlayerHealthDisplay : MonoBehaviourPun
 
     private void UpdateHealth(int currentHealth, int maxHealth)
     {
-        
         playerHealthSlider.minValue = 0;
         playerHealthSlider.maxValue = maxHealth;
         playerHealthSlider.value = currentHealth;
@@ -57,6 +68,9 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     void LateUpdate () 
     {
         if (!m_health) InitHealth();
+
+        if (!m_health) return;
+        if (!playerHealthSlider) return;
 
         if (playerHealthSlider.value != m_health.GetCurrentHealth())
             UpdateHealth(m_health.GetCurrentHealth(), m_health.GetMaxHealth());
@@ -78,13 +92,18 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         }
     }
 
-    public void SetPlayerHandler(PlayerHandler handler) => m_playerHandler = handler;
+    public void SetPlayerHandler(PlayerHandler handler)
+    {
+        Debug.Log($"Setting playerhandler of {gameObject} to: {handler}");
+        m_playerHandler = handler;
+        SetTarget(m_playerHandler.PlayerObject);
+    }
 
    	/// <summary>
     /// Assigns a Player Target to Follow and represent.
     /// </summary>
     /// <param name="target">Target.</param>
-    public void SetTarget(PlayerHandler _target)
+    private void SetTarget(GameObject _target)
     {
         if (_target == null) {
             Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
@@ -92,12 +111,11 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         }
 
         // Cache references for efficiency because we are going to reuse them.
-        this.target = _target;
-        targetTransform = this.target.GetComponent<Transform>();
-        targetRenderer = this.target.GetComponentInChildren<Renderer>();
+        targetTransform = _target.GetComponent<Transform>();
+        targetRenderer = _target.GetComponentInChildren<Renderer>();
 
-
-        CharacterController _characterController = this.target.GetComponent<CharacterController> ();
+        
+        CharacterController _characterController = _target.GetComponent<CharacterController> ();
 
         // Get data from the Player that won't change during the lifetime of this Component
         if (_characterController != null){
@@ -105,7 +123,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         }
 
         if (playerNameText != null) {
-            playerNameText.text = this.target.photonView.Owner.NickName;
+            playerNameText.text = m_playerHandler.photonView.Owner.NickName;
         }
     }
 }

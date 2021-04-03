@@ -57,8 +57,6 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 
     public void OnAttack(GameObject attacker, Attack attack)
     {
-        //if (!photonView.IsMine) return;
-
         if (attacker == gameObject) return; // can't hit self. 
 
         TakeDamage(attack.Damage);
@@ -71,7 +69,11 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
                 d.OnDestruction(attacker);
 
             var playerHandler = transform.parent.GetComponent<PlayerHandler>();
-            playerHandler.DelayedRespawn();
+
+            if (!photonView.IsMine) return;
+
+            playerHandler.photonView.RPC("DelayedRespawn", RpcTarget.All); // if this initiates the ownership, it will be done so on all! Send reference to .this or something.
+            //playerHandler.DelayedRespawn();
             PhotonNetwork.Destroy(gameObject);
         }
     }

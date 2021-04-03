@@ -64,7 +64,7 @@ public class ItemPickUp : MonoBehaviour
 
         var attack = new Attack(m_baseDamage, isCritical);
 
-        Debug.Log($"{Owner.name} attacks {col.gameObject.name}, damage: {attack.Damage}, isCritical: {isCritical}");
+        //Debug.Log($"{Owner.name} attacks {col.gameObject.name}, damage: {attack.Damage}, isCritical: {isCritical}");
         
         attackable.OnAttack(Owner, attack);
     }
