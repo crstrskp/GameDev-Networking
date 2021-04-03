@@ -93,9 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f261d7ea91c18bc4fadc0bd773082956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerUIPrefab: {fileID: 170056, guid: 1fa7389f427a9bf49a6c7077a26ba259, type: 3}
   m_cameraPrefab: {fileID: 5066056848955781667, guid: b7eae9b5810504a4490b902372d94613, type: 3}
-  m_health: {fileID: 3687271628521638821}
+  m_playerObject: {fileID: 0}
 --- !u!114 &189003930571459136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,32 +111,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
---- !u!114 &1910228708487439501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560656920239496129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 189003930571459136}
-  - {fileID: 3687271628521638821}
-  - {fileID: 1919121109608035096}
-  - {fileID: 2519535149558058895}
-  sceneViewId: 1
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &3687271628521638821
 MonoBehaviour:
   m_ObjectHideFlags: 0

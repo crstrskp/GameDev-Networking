@@ -11,12 +11,11 @@ public class RagdollHandler : MonoBehaviour, IDestructible
 
     public void OnDestruction(GameObject destroyer)
     {
-        var ragdollObj = PhotonNetwork.Instantiate("RagdollObject", transform.position, transform.rotation);
+        var ragdollObj = PhotonNetwork.Instantiate("YBot-Ragdoll", transform.position, transform.rotation);
 
         var vectorFromDestroyer = transform.position - destroyer.transform.position;
         vectorFromDestroyer.Normalize();
         vectorFromDestroyer.y += Lift;
-
 
         ragdollObj.GetComponent<Ragdoll>().ApplyForce(vectorFromDestroyer * Force);
     }
