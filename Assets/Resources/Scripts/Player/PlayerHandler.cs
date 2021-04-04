@@ -60,7 +60,6 @@ public class PlayerHandler : MonoBehaviourPun
             var spawnPos = new Vector3(10, 10, 0);
             GameObject player = PhotonNetwork.Instantiate("PlayerPun", spawnPos, Quaternion.identity);
             photonView.RPC("SetParentOfPlayerModel", RpcTarget.All, player.GetPhotonView().ViewID);
-            //photonView.RPC("ReactivateUI", RpcTarget.All, PlayerObject.GetPhotonView().ViewID);
 
             m_camera.GetComponent<WowCamera>().Target = player.transform;
         }
@@ -73,7 +72,6 @@ public class PlayerHandler : MonoBehaviourPun
         PlayerHealthDisplayGO.SetActive(false);
     }
 
-    //[PunRPC]
     private void ReactivateUI()
     {
         if (!PlayerHealthDisplayGO)
@@ -87,7 +85,6 @@ public class PlayerHandler : MonoBehaviourPun
             PlayerObject = PhotonView.Find(m_playerObjectViewId).gameObject;
 
         playerHealthDisplay.SetTarget(PlayerObject);
-        Debug.Log($"UI Target set to {PlayerObject}");
         playerHealthDisplay.gameObject.SetActive(true);
     }
 

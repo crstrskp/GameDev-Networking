@@ -107,9 +107,6 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     /// <param name="target">Target.</param>
     public void SetTarget(GameObject _target)
     {
-        Debug.Log($"Setting target transform to: {_target}");
-        Debug.Log(_target.name);
-
         if (_target == null) {
             Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
             return;
