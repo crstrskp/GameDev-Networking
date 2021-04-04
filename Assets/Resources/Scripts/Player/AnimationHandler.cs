@@ -11,7 +11,6 @@ public class AnimationHandler : MonoBehaviourPun
     [SerializeField] private PlayerAttackInput m_playerAttackInput;
     [SerializeField] private PlayerWeaponHandler m_playerWeaponHandler;
 
-    //public event Action Attack;
     public event Action AttackStarted;
     public event Action AttackEnded;
 
@@ -56,16 +55,15 @@ public class AnimationHandler : MonoBehaviourPun
 
     private void SetAttackAnimation()
     {
-        if (m_playerWeaponHandler.IsAttacking)
-        {
-            Debug.Log("Already attacking - ignoring input");
-            return;
-        }
+        if (m_playerWeaponHandler.IsAttacking) return;
 
         m_anim.SetTrigger("Attack");
         m_playerWeaponHandler.IsAttacking = true;
     }
 
+    /// <summary>
+    /// Called from Animation event
+    /// </summary>
     private void AttackStart()
     {
         if (m_playerWeaponHandler.EquippedWeapon && m_playerWeaponHandler.EquippedWeapon.AttackActive) return;
@@ -73,11 +71,13 @@ public class AnimationHandler : MonoBehaviourPun
         AttackStarted?.Invoke();
     }
 
+    /// <summary>
+    /// Called from Animation event
+    /// </summary>
     private void AttackEnd()
     {
         AttackEnded?.Invoke();
     }
-
 
     #region cleanup
 

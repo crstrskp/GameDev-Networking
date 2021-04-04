@@ -72,8 +72,9 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 
             if (!photonView.IsMine) return;
 
-            playerHandler.photonView.RPC("DelayedRespawn", RpcTarget.All); // if this initiates the ownership, it will be done so on all! Send reference to .this or something.
-            //playerHandler.DelayedRespawn();
+            playerHandler.photonView.RPC("DelayedRespawn", RpcTarget.All);
+
+            photonView.isRuntimeInstantiated = false;
             PhotonNetwork.Destroy(gameObject);
         }
     }

@@ -17,10 +17,10 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     [SerializeField] private Slider playerHealthSlider;
 
 
-    private PlayerHandler m_playerHandler;
-    private Health m_health;
+    [SerializeField] private PlayerHandler m_playerHandler;
+    [SerializeField] private Health m_health;
 
-    private Transform targetTransform;
+    [SerializeField] private Transform targetTransform;
     private Renderer targetRenderer;
     private CanvasGroup _canvasGroup;
     private float characterControllerHeight;
@@ -36,7 +36,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     {
         if (m_playerHandler == null)
         {
-            Debug.LogError("InitHealth(): PlayerHandler not found");
+            Debug.LogError($"InitHealth(): PlayerHandler not found");
             return;
         }
         
@@ -70,6 +70,8 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         if (!m_health) InitHealth();
 
         if (!m_health) return;
+
+
         if (!playerHealthSlider) return;
 
         if (playerHealthSlider.value != m_health.GetCurrentHealth())
@@ -92,23 +94,28 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         }
     }
 
-    public void SetPlayerHandler(PlayerHandler handler)
-    {
-        Debug.Log($"Setting playerhandler of {gameObject} to: {handler}");
-        m_playerHandler = handler;
-        SetTarget(m_playerHandler.PlayerObject);
-    }
+    //public void SetPlayerHandler(PlayerHandler handler)
+    //{
+    //    Debug.Log($"Setting playerhandler of {gameObject} to: {handler}");
+    //    m_playerHandler = handler;
+    //    SetTarget(m_playerHandler.PlayerObject);
+    //}
 
    	/// <summary>
     /// Assigns a Player Target to Follow and represent.
     /// </summary>
     /// <param name="target">Target.</param>
-    private void SetTarget(GameObject _target)
+    public void SetTarget(GameObject _target)
     {
+        Debug.Log($"Setting target transform to: {_target}");
+        Debug.Log(_target.name);
+
         if (_target == null) {
             Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
             return;
         }
+
+        m_playerHandler = _target.transform.parent.GetComponent<PlayerHandler>();
 
         // Cache references for efficiency because we are going to reuse them.
         targetTransform = _target.GetComponent<Transform>();

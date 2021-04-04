@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RagdollObject: {fileID: 7663426384662924027, guid: 5f8608074d02b8447a0137cd4c1b741b, type: 3}
-  Force: 500
+  Force: 2000
   Lift: 1
 --- !u!114 &3990635189192238692
 MonoBehaviour:
