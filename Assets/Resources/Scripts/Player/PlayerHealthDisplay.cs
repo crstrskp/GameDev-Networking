@@ -94,13 +94,6 @@ public class PlayerHealthDisplay : MonoBehaviourPun
         }
     }
 
-    //public void SetPlayerHandler(PlayerHandler handler)
-    //{
-    //    Debug.Log($"Setting playerhandler of {gameObject} to: {handler}");
-    //    m_playerHandler = handler;
-    //    SetTarget(m_playerHandler.PlayerObject);
-    //}
-
    	/// <summary>
     /// Assigns a Player Target to Follow and represent.
     /// </summary>
