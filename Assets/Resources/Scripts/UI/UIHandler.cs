@@ -22,6 +22,11 @@ public class UIHandler : MonoBehaviour
             if (view.IsMine)
                 view.RPC("CreateUI", RpcTarget.All);
         }
+
+        if (playerHealthDisplay == null)
+        {
+            playerHealthDisplay = m_playerHandler.PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
+        }
     }
 
     [PunRPC]
@@ -30,13 +35,13 @@ public class UIHandler : MonoBehaviour
         if (this.m_playerUIPrefab != null)
         {
             GameObject _uiGo = Instantiate(this.m_playerUIPrefab);
-            _uiGo.SendMessage("SetTarget", gameObject, SendMessageOptions.RequireReceiver);
 
             if (!m_playerHandler)
                 m_playerHandler = transform.parent.GetComponent<PlayerHandler>();
 
             m_playerHandler.PlayerHealthDisplayGO = _uiGo;
 
+            _uiGo.SendMessage("SetTarget", gameObject, SendMessageOptions.RequireReceiver);
             playerHealthDisplay = _uiGo.GetComponent<PlayerHealthDisplay>();
         }
         else
