@@ -50,6 +50,8 @@ public class PlayerHandler : MonoBehaviourPun
         }
         else
         {
+            if (PlayerHealthDisplayGO == null) return; 
+
             if (PlayerHealthDisplayGO.activeSelf) return;
 
             PlayerHealthDisplayGO.SetActive(true);
