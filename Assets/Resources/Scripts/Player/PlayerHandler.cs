@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System;
@@ -23,8 +22,9 @@ public class PlayerHandler : MonoBehaviourPun
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
+            photonView.RPC("SetParentOfPlayerModel", RpcTarget.All, PlayerObject.GetPhotonView().ViewID);
         }
-        
+
         // #Critical
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
         DontDestroyOnLoad(gameObject);
@@ -36,6 +36,24 @@ public class PlayerHandler : MonoBehaviourPun
 
         if (this.m_camera == null)
             CreatePlayerCamera();
+    }
+
+    private void LateUpdate()
+    {
+        if (PlayerObject == null)
+        {
+            // This is terrible design! 
+            // TODO: ensure PlayerObject is set, prior to all clients receiving a call to update it!
+            photonView.RPC("SetPlayerObject", RpcTarget.All);
+            if (PlayerObject == null)
+                Debug.Log("PlayerObject could not be found.");
+        }
+        else
+        {
+            if (PlayerHealthDisplayGO.activeSelf) return;
+
+            PlayerHealthDisplayGO.SetActive(true);
+        }
     }
 
     private void CreatePlayerCamera()
@@ -63,8 +81,6 @@ public class PlayerHandler : MonoBehaviourPun
 
             m_camera.GetComponent<WowCamera>().Target = player.transform;
         }
-
-        ReactivateUI();
     }
 
     private void DeactivateUI()
@@ -80,12 +96,20 @@ public class PlayerHandler : MonoBehaviourPun
             return;
         }
 
-        var playerHealthDisplay = PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
-        if (PlayerObject == null)
-            PlayerObject = PhotonView.Find(m_playerObjectViewId).gameObject;
+        if (PlayerObject == null) return;
 
+        var playerHealthDisplay = PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
         playerHealthDisplay.SetTarget(PlayerObject);
         playerHealthDisplay.gameObject.SetActive(true);
+    }
+
+    [PunRPC]
+    private void SetPlayerObject()
+    {
+        PhotonView playerView = PhotonView.Find(m_playerObjectViewId);
+
+        if (playerView != null)
+            PlayerObject = PhotonView.Find(m_playerObjectViewId).gameObject;
     }
 
     [PunRPC]
