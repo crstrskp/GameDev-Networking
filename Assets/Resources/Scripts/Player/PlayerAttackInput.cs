@@ -16,6 +16,10 @@ public class PlayerAttackInput : MonoBehaviourPun
     public event Action DropEquipped;
     public event Action ThrowEquipped;
 
+    public event Action ShowScoreStart;
+    public event Action ShowScoreEnd;
+
+
     void Update()
     {
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
@@ -85,6 +89,16 @@ public class PlayerAttackInput : MonoBehaviourPun
         if (Input.GetMouseButtonUp(2))
         {
             ThrowEquipped?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ShowScoreStart?.Invoke();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            ShowScoreEnd?.Invoke();
         }
     }
 }
