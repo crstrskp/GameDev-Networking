@@ -67,6 +67,8 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 
             var playerHandler = transform.parent.GetComponent<PlayerHandler>();
 
+            if (playerHandler == null) return;
+
             if (!photonView.IsMine) return;
 
             playerHandler.photonView.RPC("DelayedRespawn", RpcTarget.All);
