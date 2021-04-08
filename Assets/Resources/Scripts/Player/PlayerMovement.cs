@@ -87,19 +87,19 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void YOrientation()
     {
-        if (Input.GetKey(KeyCode.Q))
-        {
-            Rotate(true);
-        }
-        else if (Input.GetKey(KeyCode.E))
-        {
-            Rotate(false);
-        }
-        else 
-        {
+        //if (Input.GetKey(KeyCode.Q))
+        //{
+        //    Rotate(true);
+        //}
+        //else if (Input.GetKey(KeyCode.E))
+        //{
+        //    Rotate(false);
+        //}
+        //else 
+        //{
             yaw += RotateSpeed * 0.035f * Input.GetAxis("Mouse X");
             transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
-        }
+        //}
     }
 
     private void AxesMovement()
@@ -145,13 +145,13 @@ public class PlayerMovement : MonoBehaviourPun
         velocity.y = Mathf.Sqrt(m_jumpHeight * -2f * gravity);
     }
 
-    private void Rotate(bool right)
-    {
-        int dir = right ? -1 : 1;
+    //private void Rotate(bool right)
+    //{
+    //    int dir = right ? -1 : 1;
 
-        yaw += RotateSpeed * 0.035f * dir;
-        transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
-    }
+    //    yaw += RotateSpeed * 0.035f * dir;
+    //    transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+    //}
     
     private void SetModelRotation(Vector3 v)
     {

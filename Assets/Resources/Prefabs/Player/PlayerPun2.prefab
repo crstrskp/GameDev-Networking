@@ -78,6 +78,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1507824433366440404}
     m_Modifications:
+    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
+      propertyPath: m_playerAttackInput
+      value: 
+      objectReference: {fileID: 4219120885105907446}
     - target: {fileID: 560656920239496129, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
       propertyPath: m_Name
       value: PlayerPun
@@ -139,3 +143,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 562293258218410885, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
   m_PrefabInstance: {fileID: 5923389935883388305}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4219120885105907446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7546150423516631911, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
+  m_PrefabInstance: {fileID: 5923389935883388305}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193506929953300048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9248417010f44994f9e37ec4894aed10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

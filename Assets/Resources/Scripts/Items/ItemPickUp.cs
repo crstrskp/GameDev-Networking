@@ -12,43 +12,47 @@ public class ItemPickUp : MonoBehaviour
     public WeaponSubType WeaponType = WeaponSubType.Melee;
     public ItemArmorSubType ItemArmorType = ItemArmorSubType.None;
 
-    public Rigidbody rigidbody;
+    public bool Throwable;
+    public GameObject Owner;
 
-    public bool AttackActive = false;
+    [Tooltip("The input number pressed for equipping this item")]
+    public int WeaponSlotKey;
+
+    [HideInInspector] public Rigidbody rigidbody;
+    [HideInInspector] public bool AttackActive = false;
+    [HideInInspector] public bool BeingThrown = false;
 
     [SerializeField] private Transform HoldPoint;
     [SerializeField] private int m_baseDamage = 15;
     [SerializeField] private int m_criticalHitChance = 15;
-    [SerializeField] private GameObject Owner; 
-    
-    //public void Drop()
-    //{
-    //    Debug.Log("TODO: [RPC] Drop()");
-    //    m_rigidbody.isKinematic = false;
-    //    transform.parent = null;
-    //}
 
-    //public void Equip(PlayerWeaponHandler playerWeaponHandler)
-    //{
-    //    Debug.Log("TODO: [RPC] Equip()");
 
-    //    if (transform.parent != null) return;
 
-    //    m_rigidbody.isKinematic = true;
+    public void Drop()
+    {
+        rigidbody.isKinematic = false;
+        transform.parent = null;
+        Owner = null;
+        GetComponent<Collider>().isTrigger = false;
+        gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
+    }
 
-    //    if (ItemType == ItemTypeDefinitions.WEAPON)
-    //    {
-    //        if (playerWeaponHandler.EquippedWeapon == null)
-    //        {
-    //            playerWeaponHandler.EquippedWeapon = this;
-    //            transform.parent = playerWeaponHandler.RightHandTransform;
-    //            Owner = playerWeaponHandler.gameObject;
-    //        }
-    //        else
-    //        {
-    //        }
-    //    }
-    //}
+    public void PickUp()
+    {
+        rigidbody.isKinematic = true;
+        //transform.parent = LEFT OR RIGHT HAND ?
+        GetComponent<Collider>().isTrigger = true;
+        gameObject.layer = LayerMask.NameToLayer("OwnedItem");
+    }
+
+    private void LateUpdate()
+    {
+        if (BeingThrown == false) return;
+        
+        if (rigidbody.velocity.magnitude > 0.05f) return;
+
+        BeingThrown = false;
+    }
 
     void OnTriggerEnter(Collider col)
     {
@@ -70,11 +74,4 @@ public class ItemPickUp : MonoBehaviour
     }
 
     private bool DetermineCritical() => (UnityEngine.Random.Range(0, 100) < m_criticalHitChance);
-        
-
-    //public void ThrowItem()
-    //{
-    //    Debug.Log("TODO: [RPC]ThrowItem()");
-    //    Debug.Log("TODO: Throw: Addforce, ApplyDamage OnCollision, unequip");
-    //}
 }
