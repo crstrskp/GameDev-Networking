@@ -5,7 +5,7 @@ public class UIHandler : MonoBehaviour
 {
     [SerializeField] private GameObject m_playerUIPrefab;
     [SerializeField] private Health m_health;
-    public PlayerHealthDisplay playerHealthDisplay;
+    [HideInInspector] public PlayerHealthDisplay playerHealthDisplay;
 
     public Health GetHealth() => m_health;
 

@@ -26,7 +26,6 @@ public class Inventory : MonoBehaviour, IDestructible
         m_playerAttackInput.PickUp += TryPickUp;
     }
 
-
     private void OnDestroy()
     {
         m_playerAttackInput.WeaponSelect -= TrySetEquipped;
@@ -50,6 +49,8 @@ public class Inventory : MonoBehaviour, IDestructible
 
     private void TryPickUp()
     {
+        if (!m_photonView.IsMine) return;
+
         var itemsWithinPickUpRadius = Physics.OverlapSphere(transform.position, m_pickUpRadius, PickUpLayerMask);
 
         var closestDist = m_pickUpRadius;
@@ -64,6 +65,8 @@ public class Inventory : MonoBehaviour, IDestructible
             }
         }
 
+        if (closestItem == null) return;
+
         var item = closestItem.transform.GetComponent<ItemPickUp>();
         var itemID = item.GetComponent<PhotonView>().ViewID;
 
@@ -73,7 +76,7 @@ public class Inventory : MonoBehaviour, IDestructible
             if (WeaponSlots[item.WeaponSlotKey] != null) return;
 
             
-            m_photonView.RPC("PickUpWeapon", RpcTarget.All, itemID);
+            m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
             
         } 
         else if (item.ItemType == ItemPickUp.ItemTypeDefinitions.SHIELD)
@@ -82,29 +85,23 @@ public class Inventory : MonoBehaviour, IDestructible
                 //m_photonView.RPC()
 
             if (ShieldSlot != null) return;
+            m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
 
             //Pick
 
         }
         else if (item.ItemType == ItemPickUp.ItemTypeDefinitions.ARMOR)
         {
-
-
             m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
         }
     }
 
-
     [PunRPC]
     private void PickUpItem(int itemID)
     {
-       
-
         var item = PhotonView.Find(itemID);
 
         if (item == null) return;
-
-        // TODO: IS THIS ENOUGH!? 
 
         var itemPickUp = item.GetComponent<ItemPickUp>();
         itemPickUp.PickUp();

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3070105191069061062}
   - component: {fileID: -5519981599425119878}
   - component: {fileID: -4367853623960287643}
+  - component: {fileID: 3811319802673839532}
+  - component: {fileID: 3316989995253369977}
   m_Layer: 0
   m_Name: Wooden Shield
   m_TagString: Untagged
@@ -113,12 +115,15 @@ MonoBehaviour:
   ItemType: 1
   WeaponType: 0
   ItemArmorType: 0
+  Throwable: 0
+  Owner: {fileID: 0}
+  WeaponSlotKey: 0
   rigidbody: {fileID: -4367853623960287643}
   AttackActive: 0
+  BeingThrown: 0
   HoldPoint: {fileID: 4490787449794159847}
   m_baseDamage: 0
   m_criticalHitChance: 15
-  Owner: {fileID: 0}
 --- !u!54 &-4367853623960287643
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -135,6 +140,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3811319802673839532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377388708257028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3316989995253369977}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3316989995253369977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377388708257028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &123936092264000312
 GameObject:
   m_ObjectHideFlags: 0
