@@ -26,7 +26,6 @@ public class Inventory : MonoBehaviour, IDestructible
         m_playerAttackInput.PickUp += TryPickUp;
     }
 
-
     private void OnDestroy()
     {
         m_playerAttackInput.WeaponSelect -= TrySetEquipped;
@@ -43,6 +42,11 @@ public class Inventory : MonoBehaviour, IDestructible
         if (WeaponSlots[weaponSlot - 1] == m_playerWeaponHandler.EquippedWeapon) return;
 
         m_playerWeaponHandler.EquippedWeapon = WeaponSlots[weaponSlot - 1];
+    }
+
+    private void TryAutoEquip()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion
@@ -71,35 +75,28 @@ public class Inventory : MonoBehaviour, IDestructible
         {
             // Already something equppied on that weaponSlot.
             if (WeaponSlots[item.WeaponSlotKey] != null) return;
-
             
-            m_photonView.RPC("PickUpWeapon", RpcTarget.All, itemID);
-            
+            m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
         } 
         else if (item.ItemType == ItemPickUp.ItemTypeDefinitions.SHIELD)
         {
             if (m_playerWeaponHandler.EquippedShield == null)
-                //m_photonView.RPC()
 
             if (ShieldSlot != null) return;
 
-            //Pick
-
+            m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
         }
         else if (item.ItemType == ItemPickUp.ItemTypeDefinitions.ARMOR)
         {
-
+            throw new NotImplementedException();
 
             m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
         }
     }
 
-
     [PunRPC]
     private void PickUpItem(int itemID)
     {
-       
-
         var item = PhotonView.Find(itemID);
 
         if (item == null) return;
@@ -109,11 +106,6 @@ public class Inventory : MonoBehaviour, IDestructible
         var itemPickUp = item.GetComponent<ItemPickUp>();
         itemPickUp.PickUp();
         itemPickUp.Owner = gameObject; // TODO: refactor. SetOwner(PhotonViewID)
-    }
-
-    private void TryAutoEquip()
-    {
-        throw new NotImplementedException();
     }
 
     #endregion
