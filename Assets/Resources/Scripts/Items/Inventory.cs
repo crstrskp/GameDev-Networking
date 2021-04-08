@@ -54,6 +54,8 @@ public class Inventory : MonoBehaviour, IDestructible
 
     private void TryPickUp()
     {
+        if (!m_photonView.IsMine) return;
+
         var itemsWithinPickUpRadius = Physics.OverlapSphere(transform.position, m_pickUpRadius, PickUpLayerMask);
 
         var closestDist = m_pickUpRadius;
@@ -67,6 +69,8 @@ public class Inventory : MonoBehaviour, IDestructible
                 closestDist = dist;
             }
         }
+
+        if (closestItem == null) return;
 
         var item = closestItem.transform.GetComponent<ItemPickUp>();
         var itemID = item.GetComponent<PhotonView>().ViewID;
@@ -83,6 +87,7 @@ public class Inventory : MonoBehaviour, IDestructible
             if (m_playerWeaponHandler.EquippedShield == null)
 
             if (ShieldSlot != null) return;
+            m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
 
             m_photonView.RPC("PickUpItem", RpcTarget.All, itemID);
         }
@@ -100,8 +105,6 @@ public class Inventory : MonoBehaviour, IDestructible
         var item = PhotonView.Find(itemID);
 
         if (item == null) return;
-
-        // TODO: IS THIS ENOUGH!? 
 
         var itemPickUp = item.GetComponent<ItemPickUp>();
         itemPickUp.PickUp();

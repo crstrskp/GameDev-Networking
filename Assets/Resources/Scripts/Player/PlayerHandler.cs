@@ -46,7 +46,7 @@ public class PlayerHandler : MonoBehaviourPun
             // TODO: ensure PlayerObject is set, prior to all clients receiving a call to update it!
             photonView.RPC("SetPlayerObject", RpcTarget.All);
             if (PlayerObject == null)
-                Debug.Log("PlayerObject could not be found.");
+                Debug.Log("TODO: Refactor this! PlayerObject could not be found.");
         }
         else
         {
