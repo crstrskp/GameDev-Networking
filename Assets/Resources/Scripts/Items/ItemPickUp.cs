@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class ItemPickUp : MonoBehaviour
 {
-    public enum ItemTypeDefinitions {  WEAPON, SHIELD, ARMOR };
-    public enum WeaponSubType { Melee, Ranged, Other }
-    public enum ItemArmorSubType { None, Head, Chest, Hands, Legs, Boots };
+    public enum ItemTypeDefinitions {  WEAPON, SHIELD, ARMOR, NA };
+    public enum WeaponSubType { Melee, Ranged, Other, NA }
+    //public enum WeaponEquipType { Sword, Mace, Axe, Sword2H, Mace2H, Axe2H, Bow, Spear }
+    public enum WeaponEquipType { OneHanded, TwoHanded, Bow, NA }
+    public enum ItemArmorSubType { None, Head, Chest, Hands, Legs, Boots, NA };
 
     public ItemTypeDefinitions ItemType = ItemTypeDefinitions.WEAPON;
     public WeaponSubType WeaponType = WeaponSubType.Melee;
+    public WeaponEquipType EquipType = WeaponEquipType.OneHanded;
     public ItemArmorSubType ItemArmorType = ItemArmorSubType.None;
 
     public bool Throwable;
@@ -27,7 +30,6 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField] private int m_criticalHitChance = 15;
 
 
-
     public void Drop()
     {
         rigidbody.isKinematic = false;
@@ -37,12 +39,12 @@ public class ItemPickUp : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
     }
 
-    public void PickUp()
+    public void PickUp(GameObject owner)
     {
-        rigidbody.isKinematic = true;
-        //transform.parent = LEFT OR RIGHT HAND ?
-        GetComponent<Collider>().isTrigger = true;
         gameObject.layer = LayerMask.NameToLayer("OwnedItem");
+        rigidbody.isKinematic = true;
+        GetComponent<Collider>().isTrigger = true;
+        Owner = owner;
     }
 
     private void LateUpdate()

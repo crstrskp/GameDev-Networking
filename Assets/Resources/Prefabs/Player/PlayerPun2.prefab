@@ -78,34 +78,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1507824433366440404}
     m_Modifications:
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: m_photonView
-      value: 
-      objectReference: {fileID: 390242643404479042}
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: m_pickUpRadius
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: LeftHandTransform
-      value: 
-      objectReference: {fileID: 4664327966634774742}
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: RightHandTransform
-      value: 
-      objectReference: {fileID: 230472546395814621}
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: m_playerAttackInput
-      value: 
-      objectReference: {fileID: 4219120885105907446}
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: m_playerWeaponHandler
-      value: 
-      objectReference: {fileID: 7301898831368430581}
-    - target: {fileID: 112042066325775959, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-      propertyPath: PickUpLayerMask.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 560656920239496129, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
       propertyPath: m_Name
       value: PlayerPun
@@ -165,48 +137,5 @@ GameObject:
 --- !u!4 &6195177918654617108 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 562293258218410885, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-  m_PrefabInstance: {fileID: 5923389935883388305}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4219120885105907446 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7546150423516631911, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-  m_PrefabInstance: {fileID: 5923389935883388305}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6193506929953300048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9248417010f44994f9e37ec4894aed10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &390242643404479042 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2927779155592257581, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-  m_PrefabInstance: {fileID: 5923389935883388305}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6193506929953300048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7301898831368430581 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3990635189192238692, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-  m_PrefabInstance: {fileID: 5923389935883388305}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6193506929953300048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a26fd3ae2efd08742accfcf2f1addf93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &4664327966634774742 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1337320951038842183, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
-  m_PrefabInstance: {fileID: 5923389935883388305}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &230472546395814621 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5838589589644836684, guid: 1d6171b0dbf9afd41b92fba13b811175, type: 3}
   m_PrefabInstance: {fileID: 5923389935883388305}
   m_PrefabAsset: {fileID: 0}
