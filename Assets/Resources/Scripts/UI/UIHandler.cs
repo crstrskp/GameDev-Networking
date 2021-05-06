@@ -14,7 +14,7 @@ public class UIHandler : MonoBehaviour
     private void LateUpdate()
     {
         if (!m_playerHandler)
-            m_playerHandler = transform.parent.GetComponent<PlayerHandler>();
+            m_playerHandler = transform.GetComponent<PlayerHandler>();
 
         if (m_playerHandler.PlayerHealthDisplayGO == null)
         {
@@ -37,7 +37,7 @@ public class UIHandler : MonoBehaviour
             GameObject _uiGo = Instantiate(this.m_playerUIPrefab);
 
             if (!m_playerHandler)
-                m_playerHandler = transform.parent.GetComponent<PlayerHandler>();
+                m_playerHandler = transform.GetComponent<PlayerHandler>();
 
             m_playerHandler.PlayerHealthDisplayGO = _uiGo;
 

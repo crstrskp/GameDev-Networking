@@ -7,20 +7,29 @@ using Photon.Pun;
 public class AnimationHandler : MonoBehaviourPun
 {
     [SerializeField] private Animator m_anim;
-    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerMovement m_playerMovement;
     [SerializeField] private PlayerAttackInput m_playerAttackInput;
     [SerializeField] private PlayerWeaponHandler m_playerWeaponHandler;
 
     public event Action AttackStarted;
     public event Action AttackEnded;
+    public event Action ThrowEquipped;
 
     private void Awake() 
     {
         if (!photonView.IsMine) return;
 
-        playerMovement.Jumping += SetJumpAnimation;    
-        playerMovement.Landing += SetLandingAnimation;
+        if (!m_playerMovement) SetPlayerMovement();
+
+        m_playerMovement.Jumping += SetJumpAnimation;    
+        m_playerMovement.Landing += SetLandingAnimation;
         m_playerAttackInput.Attack += SetAttackAnimation;
+        m_playerAttackInput.Throw += SetThrowAnimation;
+    }
+
+    private void SetPlayerMovement()
+    {
+        
     }
 
     private void LateUpdate() 
@@ -41,11 +50,11 @@ public class AnimationHandler : MonoBehaviourPun
         m_anim.SetFloat("VelocityY", y);
 
         m_anim.SetBool("Moving", moving);
-        m_anim.SetBool("Running", playerMovement.IsSprinting());
+        m_anim.SetBool("Running", m_playerMovement.IsSprinting());
 
-        m_anim.SetBool("Falling", playerMovement.isFalling());
+        m_anim.SetBool("Falling", m_playerMovement.isFalling());
 
-        m_anim.SetBool("isGrounded", playerMovement.IsGrounded());
+        m_anim.SetBool("isGrounded", m_playerMovement.IsGrounded());
 
     }
 
@@ -79,13 +88,28 @@ public class AnimationHandler : MonoBehaviourPun
         AttackEnded?.Invoke();
     }
 
+    private void SetThrowAnimation()
+    {
+        m_anim.SetTrigger("Throw");
+    }
+
+    /// <summary>
+    /// Called from Animation event
+    /// </summary>
+    private void ThrowObject()
+    {
+        ThrowEquipped?.Invoke();
+    }
+    
+
     #region cleanup
 
     private void OnDestroy()
     {
-        playerMovement.Jumping -= SetJumpAnimation;    
-        playerMovement.Landing -= SetLandingAnimation;
+        m_playerMovement.Jumping -= SetJumpAnimation;    
+        m_playerMovement.Landing -= SetLandingAnimation;
         m_playerAttackInput.Attack -= SetAttackAnimation;
+        m_playerAttackInput.Throw -= SetThrowAnimation;
     }
     #endregion
 }

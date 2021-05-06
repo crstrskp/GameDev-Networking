@@ -169,7 +169,7 @@ public class PlayerMovement : MonoBehaviourPun
             }
             else
             {
-                m_modelTransform.localRotation = Quaternion.identity; 
+                m_modelTransform.localRotation = Quaternion.identity;
             }
         }
         else 
@@ -188,9 +188,9 @@ public class PlayerMovement : MonoBehaviourPun
     {
         if (m_playerCamera != null) return;
 
-        if (transform.parent == null) return;
+        //if (transform.parent == null) return;
 
-        m_playerCamera = transform.parent.GetComponentInChildren<Camera>();
+        m_playerCamera = transform.GetComponentInChildren<Camera>();
     }
     
     private void OnDrawGizmos() 

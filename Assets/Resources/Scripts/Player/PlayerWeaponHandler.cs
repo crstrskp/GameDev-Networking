@@ -17,7 +17,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         m_animHandler.AttackStarted += AttackStart;
         m_animHandler.AttackEnded += AttackEnd;
 
-        m_playerAttackInput.ThrowEquipped += ThrowItem; // SHOULD BE FROM ANIMATOR AS WELL!
+        m_animHandler.ThrowEquipped += ThrowItem; 
     }
 
     private void OnDestroy()
@@ -25,7 +25,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         m_animHandler.AttackStarted -= AttackStart;
         m_animHandler.AttackEnded -= AttackEnd;
 
-        m_playerAttackInput.ThrowEquipped -= ThrowItem;
+        m_animHandler.ThrowEquipped -= ThrowItem;
     }
 
     private void AttackStart()

@@ -65,16 +65,18 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
             foreach (IDestructible d in destructibles)
                 d.OnDestruction(attacker);
 
-            var playerHandler = transform.parent.GetComponent<PlayerHandler>();
+            var playerHandler = transform.GetComponent<PlayerHandler>();
 
             if (playerHandler == null) return;
 
             if (!photonView.IsMine) return;
 
-            playerHandler.photonView.RPC("DelayedRespawn", RpcTarget.All);
 
-            photonView.isRuntimeInstantiated = false;
-            PhotonNetwork.Destroy(gameObject);
+            playerHandler.photonView.RPC("PlayerDeath", RpcTarget.All);
+
+            //photonView.isRuntimeInstantiated = false;
+            //PhotonNetwork.Destroy(gameObject);
+
         }
     }
 }

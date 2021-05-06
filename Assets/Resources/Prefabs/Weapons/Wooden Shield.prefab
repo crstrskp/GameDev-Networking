@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 1
   WeaponType: 0
+  EquipType: 0
   ItemArmorType: 0
   Throwable: 0
   Owner: {fileID: 0}

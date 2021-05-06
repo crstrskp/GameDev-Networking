@@ -212,8 +212,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameText: {fileID: 11467878}
-  screenOffset: {x: 0, y: 45, z: 0}
+  screenOffset: {x: 0, y: 210, z: 0}
   playerHealthSlider: {fileID: 11470066}
+  m_playerHandler: {fileID: 0}
+  m_health: {fileID: 0}
+  targetTransform: {fileID: 0}
 --- !u!1 &170058
 GameObject:
   m_ObjectHideFlags: 0

@@ -96,32 +96,6 @@ MonoBehaviour:
   m_playerUIPrefab: {fileID: 170056, guid: 1fa7389f427a9bf49a6c7077a26ba259, type: 3}
   m_health: {fileID: 3687271628521638821}
   playerHealthDisplay: {fileID: 0}
---- !u!114 &-2927779155592257581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560656920239496129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 189003930571459136}
-  - {fileID: 3687271628521638821}
-  - {fileID: 1919121109608035096}
-  - {fileID: 2519535149558058895}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &112042066325775959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +114,7 @@ MonoBehaviour:
   m_pickUpRadius: 2
   m_playerAttackInput: {fileID: 7546150423516631911}
   m_playerWeaponHandler: {fileID: 3990635189192238692}
-  m_photonView: {fileID: -2927779155592257581}
+  m_photonView: {fileID: 0}
   LeftHandTransform: {fileID: 5509242716163909481}
   RightHandTransform: {fileID: 4746403690066232695}
   WeaponSlots:
@@ -149,22 +123,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   ShieldSlot: {fileID: 0}
---- !u!114 &189003930571459136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560656920239496129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &3687271628521638821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,6 +380,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7546150423516631911}
     - target: {fileID: 8033221010945888525, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033221010945888525, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
       propertyPath: m_playerAttackInput
       value: 
       objectReference: {fileID: 7546150423516631911}
@@ -433,7 +395,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPun
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8034023350072734894, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
+    - {fileID: 466862117698378673, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
 --- !u!1 &560656920239496129 stripped
 GameObject:
