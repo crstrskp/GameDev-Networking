@@ -30,13 +30,18 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void AttackStart()
     {
+        if (EquippedWeapon == null) return; // TODO: Unarmed attacks?
+
         EquippedWeapon.AttackActive = true;
     }
 
     private void AttackEnd()
     {
-        EquippedWeapon.AttackActive = false;
         IsAttacking = false;
+
+        if (EquippedWeapon == null) return;
+
+        EquippedWeapon.AttackActive = false;
     }
 
     private void ThrowItem()

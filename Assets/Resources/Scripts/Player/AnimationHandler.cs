@@ -29,7 +29,7 @@ public class AnimationHandler : MonoBehaviourPun
 
     private void SetPlayerMovement()
     {
-        
+        throw new NotImplementedException();
     }
 
     private void LateUpdate() 

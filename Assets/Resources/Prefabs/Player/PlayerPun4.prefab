@@ -216,6 +216,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4600432114919942753}
     - target: {fileID: 2590228769440780220, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
+      propertyPath: m_model
+      value: 
+      objectReference: {fileID: 6519974779124025425}
+    - target: {fileID: 2590228769440780220, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
+      propertyPath: m_health
+      value: 
+      objectReference: {fileID: 4600432114919942753}
+    - target: {fileID: 2590228769440780220, guid: b736166d497cf884e8c2edf00909a8af, type: 3}
       propertyPath: m_cameraPrefab
       value: 
       objectReference: {fileID: 5066056848955781667, guid: b7eae9b5810504a4490b902372d94613, type: 3}

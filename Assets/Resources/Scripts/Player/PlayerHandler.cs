@@ -8,21 +8,21 @@ public class PlayerHandler : MonoBehaviourPun
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
-    //public GameObject PlayerObject;
     public GameObject PlayerHealthDisplayGO;
 
     [SerializeField] private float m_respawnTime = 2.5f;
     [SerializeField] private GameObject m_cameraPrefab;
+    [SerializeField] private GameObject m_model;
+    [SerializeField] private Health m_health;
 
     private GameObject m_camera;
-    private int m_playerObjectViewId;
+    
 
     private void Awake() 
     {
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            //photonView.RPC("SetParentOfPlayerModel", RpcTarget.All, PlayerObject.GetPhotonView().ViewID);
         }
 
         // #Critical
@@ -40,22 +40,11 @@ public class PlayerHandler : MonoBehaviourPun
 
     private void LateUpdate()
     {
-        //if (PlayerObject == null)
-        //{
-        //    // This is terrible design! 
-        //    // TODO: ensure PlayerObject is set, prior to all clients receiving a call to update it!
-        //    photonView.RPC("SetPlayerObject", RpcTarget.All);
-        //    if (PlayerObject == null)
-        //        Debug.Log("TODO: Refactor this! PlayerObject could not be found.");
-        //}
-        //else
-        //{
-            if (PlayerHealthDisplayGO == null) return; 
+        if (PlayerHealthDisplayGO == null) return; 
 
-            if (PlayerHealthDisplayGO.activeSelf) return;
+        if (PlayerHealthDisplayGO.activeSelf) return;
 
-            PlayerHealthDisplayGO.SetActive(true);
-        //}
+        PlayerHealthDisplayGO.SetActive(true);
     }
 
     private void CreatePlayerCamera()
@@ -65,7 +54,6 @@ public class PlayerHandler : MonoBehaviourPun
             if (m_camera != null) return;
 
             this.m_camera = Instantiate(this.m_cameraPrefab, transform);
-            //m_camera.GetComponent<WowCamera>().Target = PlayerObject.transform;
             m_camera.GetComponent<WowCamera>().Target = transform;
         }
         else 
@@ -73,18 +61,6 @@ public class PlayerHandler : MonoBehaviourPun
             Debug.LogWarning("Missing PlayerCamera reference on player prefab.", this);
         }
     }
-
-    //public void SpawnPlayer()
-    //{
-    //    if (photonView.IsMine)
-    //    {
-    //        var spawnPos = new Vector3(10, 10, 0);
-    //        GameObject player = PhotonNetwork.Instantiate("PlayerPun", spawnPos, Quaternion.identity);
-    //        photonView.RPC("SetParentOfPlayerModel", RpcTarget.All, player.GetPhotonView().ViewID);
-
-    //        m_camera.GetComponent<WowCamera>().Target = player.transform;
-    //    }
-    //}
 
     private void DeactivateUI()
     {
@@ -98,8 +74,6 @@ public class PlayerHandler : MonoBehaviourPun
             Debug.Log("playerHealthDisplay not set");
             return;
         }
-
-        //if (PlayerObject == null) return;
 
         var playerHealthDisplay = PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
         playerHealthDisplay.SetTarget(gameObject);
@@ -140,25 +114,29 @@ public class PlayerHandler : MonoBehaviourPun
 
     private IEnumerator SpawnAfterDelay(float delay)
     {
-        ResetPlayer();
         yield return new WaitForSeconds(delay);
         //SpawnPlayer();
+        ResetPlayer();
         ReenablePlayer();
         ReactivateUI();
     }
 
     private void ResetPlayer()
     {
+        m_health.Heal(float.MaxValue);
+        // Reequip!! 
         Debug.LogWarning("Reset Player not implemented yet!");
     }
 
     private void ReenablePlayer()
     {
         Debug.LogWarning("ReenablePlayer not implemented yet!");
+        m_model.SetActive(true);
     }
 
     private void DisablePlayer()
     {
+        m_model.SetActive(false);
         Debug.LogWarning("DisablePlayer not implemented yet!");
     }
 }

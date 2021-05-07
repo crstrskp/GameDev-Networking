@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void Update() 
     {
+        if (!m_modelTransform.gameObject.activeSelf) return;
+
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
             return;

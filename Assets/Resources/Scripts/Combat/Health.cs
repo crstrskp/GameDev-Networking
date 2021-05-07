@@ -14,8 +14,9 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
     public int GetCurrentHealth() => m_currentHealth;
     public int GetMaxHealth() => m_maxHealth;
 
-    private void Awake()
+    private void OnEnable()
     {
+        
         if (!photonView.IsMine) return;
 
         m_currentHealth = m_maxHealth;
