@@ -19,17 +19,10 @@ public class AnimationHandler : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
 
-        if (!m_playerMovement) SetPlayerMovement();
-
         m_playerMovement.Jumping += SetJumpAnimation;    
         m_playerMovement.Landing += SetLandingAnimation;
         m_playerAttackInput.Attack += SetAttackAnimation;
         m_playerAttackInput.Throw += SetThrowAnimation;
-    }
-
-    private void SetPlayerMovement()
-    {
-        throw new NotImplementedException();
     }
 
     private void LateUpdate() 
@@ -44,7 +37,7 @@ public class AnimationHandler : MonoBehaviourPun
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
 
-        var moving = Mathf.Abs(x) + Mathf.Abs(y) > 0.25 ? true : false;
+        var moving = Mathf.Abs(x) + Mathf.Abs(y) > 0.05 ? true : false;
 
         m_anim.SetFloat("VelocityX", x);
         m_anim.SetFloat("VelocityY", y);
@@ -106,6 +99,8 @@ public class AnimationHandler : MonoBehaviourPun
 
     private void OnDestroy()
     {
+        if (!photonView.IsMine) return; 
+
         m_playerMovement.Jumping -= SetJumpAnimation;    
         m_playerMovement.Landing -= SetLandingAnimation;
         m_playerAttackInput.Attack -= SetAttackAnimation;

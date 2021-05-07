@@ -54,7 +54,7 @@ public class PlayerHandler : MonoBehaviourPun
             if (m_camera != null) return;
 
             this.m_camera = Instantiate(this.m_cameraPrefab, transform);
-            m_camera.GetComponent<WowCamera>().Target = transform;
+            this.m_camera.GetComponent<WowCamera>().Target = transform;
         }
         else 
         {
@@ -79,24 +79,6 @@ public class PlayerHandler : MonoBehaviourPun
         playerHealthDisplay.SetTarget(gameObject);
         playerHealthDisplay.gameObject.SetActive(true);
     }
-
-    //[PunRPC]
-    //private void SetPlayerObject()
-    //{
-    //    PhotonView playerView = PhotonView.Find(m_playerObjectViewId);
-
-    //    if (playerView != null)
-    //        PlayerObject = PhotonView.Find(m_playerObjectViewId).gameObject;
-    //}
-
-    //[PunRPC]
-    //private void SetParentOfPlayerModel(int viewId)
-    //{
-    //    m_playerObjectViewId = viewId;
-
-    //    var go = PhotonView.Find(viewId).transform;
-    //    go.SetParent(transform);
-    //}
 
     [PunRPC]
     public void PlayerDeath()
@@ -139,4 +121,6 @@ public class PlayerHandler : MonoBehaviourPun
         m_model.SetActive(false);
         Debug.LogWarning("DisablePlayer not implemented yet!");
     }
+
+    public GameObject GetModel() => m_model;
 }

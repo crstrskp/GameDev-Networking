@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,18 +22,19 @@ public class ItemPickUp : MonoBehaviour
     [Tooltip("The input number pressed for equipping this item")]
     public int WeaponSlotKey;
 
-    [HideInInspector] public Rigidbody rigidbody;
     [HideInInspector] public bool AttackActive = false;
-    [HideInInspector] public bool BeingThrown = false;
 
-    [SerializeField] private Transform HoldPoint;
     [SerializeField] private int m_baseDamage = 15;
     [SerializeField] private int m_criticalHitChance = 15;
 
+    [SerializeField] private Rigidbody m_rigidbody;
+    [SerializeField] private float m_throwForce;
+
+    private bool m_beingThrown = false;
 
     public void Drop()
     {
-        rigidbody.isKinematic = false;
+        m_rigidbody.isKinematic = false;
         transform.parent = null;
         Owner = null;
         GetComponent<Collider>().isTrigger = false;
@@ -42,36 +44,66 @@ public class ItemPickUp : MonoBehaviour
     public void PickUp(GameObject owner)
     {
         gameObject.layer = LayerMask.NameToLayer("OwnedItem");
-        rigidbody.isKinematic = true;
+        m_rigidbody.isKinematic = true;
         GetComponent<Collider>().isTrigger = true;
         Owner = owner;
     }
 
-    private void LateUpdate()
+    public void StartThrow()
     {
-        if (BeingThrown == false) return;
-        
-        if (rigidbody.velocity.magnitude > 0.05f) return;
+        m_rigidbody.isKinematic = false;
+        transform.parent = null;
+        GetComponent<Collider>().isTrigger = false;
+        gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
 
-        BeingThrown = false;
+
+        var dir = Owner.GetComponent<PlayerHandler>().GetModel().transform.forward;
+        m_rigidbody.AddForce(dir * m_throwForce, ForceMode.Impulse);
+
+        Debug.LogWarning("FIX Torque on throw");
+        m_rigidbody.AddRelativeTorque(-transform.forward * 2000, ForceMode.Impulse);
+
+        transform.up = -transform.up;
+        
+        m_beingThrown = true;
     }
 
+    /// <summary>
+    /// Used for melee attack hits
+    /// </summary>
+    /// <param name="col"></param>
     void OnTriggerEnter(Collider col)
     {
         if (WeaponType != WeaponSubType.Melee) return;
-        
-        if (AttackActive == false) return;
 
-        var attackable = col.gameObject.GetComponent<IAttackable>();
-        
+        if (AttackActive == false) return;
+            
+        ApplyMeleeAttack(col.gameObject, m_baseDamage);
+    }
+
+    /// <summary>
+    /// Used for Throw hits
+    /// </summary>
+    /// <param name="col"></param>
+    private void OnCollisionEnter(Collision col)
+    {
+        if (!m_beingThrown) return;
+
+        ApplyMeleeAttack(col.gameObject, m_baseDamage * 2);
+        m_beingThrown = false;
+        Owner = null;
+    }
+
+    private void ApplyMeleeAttack(GameObject col, int dmg)
+    {
+        var attackable = col.GetComponent<IAttackable>();
+
         if (attackable == null) return;
 
         var isCritical = DetermineCritical();
 
-        var attack = new Attack(m_baseDamage, isCritical);
+        var attack = new Attack(dmg, isCritical);
 
-        //Debug.Log($"{Owner.name} attacks {col.gameObject.name}, damage: {attack.Damage}, isCritical: {isCritical}");
-        
         attackable.OnAttack(Owner, attack);
     }
 

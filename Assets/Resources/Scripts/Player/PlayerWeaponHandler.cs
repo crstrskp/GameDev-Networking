@@ -46,12 +46,12 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void ThrowItem()
     {
-        Debug.Log("ThrowItem()");
-
         if (EquippedWeapon == null) return;
 
-        // Add force
-        // add flag to item ? beingThrown, so it will damage target
+        if (EquippedWeapon.Throwable == false) return;
 
+        EquippedWeapon.StartThrow();
+
+        EquippedWeapon = null;
     }
 }

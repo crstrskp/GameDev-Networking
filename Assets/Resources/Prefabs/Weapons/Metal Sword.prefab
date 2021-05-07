@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6992283893012226169}
   - component: {fileID: -3548546961706124796}
   - component: {fileID: 5610450802099872792}
-  - component: {fileID: -6565421465187599076}
   m_Layer: 0
   m_Name: Metal Sword
   m_TagString: Untagged
@@ -116,15 +115,15 @@ MonoBehaviour:
   WeaponType: 0
   EquipType: 0
   ItemArmorType: 0
-  Throwable: 0
+  Throwable: 1
   Owner: {fileID: 0}
   WeaponSlotKey: 1
-  rigidbody: {fileID: -3548546961706124796}
   AttackActive: 0
-  BeingThrown: 0
-  HoldPoint: {fileID: 4196161463399058764}
   m_baseDamage: 45
   m_criticalHitChance: 15
+  m_holdPoint: {fileID: 4196161463399058764}
+  m_rigidbody: {fileID: -3548546961706124796}
+  m_throwForce: 20
 --- !u!54 &-3548546961706124796
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,27 +158,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: -6565421465187599076}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-6565421465187599076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220633678843950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8769307274191792594
 GameObject:
   m_ObjectHideFlags: 0
