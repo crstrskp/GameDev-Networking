@@ -25,6 +25,10 @@ public class UIHandler : MonoBehaviour
 
         if (playerHealthDisplay == null)
         {
+            if (m_playerHandler == null) return;
+
+            if (m_playerHandler.PlayerHealthDisplayGO == null) return; 
+
             playerHealthDisplay = m_playerHandler.PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
         }
     }
