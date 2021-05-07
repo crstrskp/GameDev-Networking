@@ -15,7 +15,7 @@ public class RagdollHandler : MonoBehaviour, IDestructible
     {
         if (m_ragdollOnCooldown) return;
 
-        var ragdollObj = PhotonNetwork.Instantiate("YBot-Ragdoll", transform.position, transform.rotation);
+        var ragdollObj = PhotonNetwork.Instantiate("Player\\YBot-Ragdoll", transform.position, transform.rotation);
 
         var vectorFromDestroyer = transform.position - destroyer.transform.position;
         vectorFromDestroyer.Normalize();
