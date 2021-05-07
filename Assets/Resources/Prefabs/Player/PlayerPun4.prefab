@@ -380,6 +380,10 @@ PrefabInstance:
       propertyPath: Owner
       value: 
       objectReference: {fileID: 6520848173819532308}
+    - target: {fileID: -4367853623960287643, guid: 1dcc7241650bb634c90937f810f83ffe, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1377388708257028, guid: 1dcc7241650bb634c90937f810f83ffe, type: 3}
       propertyPath: m_Name
       value: Wooden Shield
@@ -465,6 +469,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3548546961706124796, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1220633678843950, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
       propertyPath: m_Name
       value: Metal Sword (1)
@@ -517,6 +525,10 @@ PrefabInstance:
       propertyPath: Owner
       value: 
       objectReference: {fileID: 6520848173819532308}
+    - target: {fileID: 6993561636901947383, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
 --- !u!4 &6186534118415316917 stripped
