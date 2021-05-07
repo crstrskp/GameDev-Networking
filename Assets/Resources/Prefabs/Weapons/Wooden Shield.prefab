@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5519981599425119878}
   - component: {fileID: -4367853623960287643}
   - component: {fileID: 3811319802673839532}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wooden Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
