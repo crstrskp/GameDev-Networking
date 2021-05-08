@@ -15,6 +15,9 @@ public class PlayerHandler : MonoBehaviourPun
     [SerializeField] private GameObject m_model;
     [SerializeField] private Health m_health;
 
+    private Collider m_collider;
+    private CharacterController m_characterController; 
+
     private GameObject m_camera;
     
 
@@ -25,6 +28,8 @@ public class PlayerHandler : MonoBehaviourPun
             LocalPlayerInstance = gameObject;
         }
 
+        m_collider = GetComponent<Collider>();
+        m_characterController = GetComponent<CharacterController>();
         // #Critical
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
         DontDestroyOnLoad(gameObject);
@@ -87,7 +92,6 @@ public class PlayerHandler : MonoBehaviourPun
         DelayedRespawn();
     }
 
-    //[PunRPC]
     private void DelayedRespawn()
     {
         DeactivateUI();
@@ -97,7 +101,6 @@ public class PlayerHandler : MonoBehaviourPun
     private IEnumerator SpawnAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        //SpawnPlayer();
         ResetPlayer();
         ReenablePlayer();
         ReactivateUI();
@@ -105,21 +108,39 @@ public class PlayerHandler : MonoBehaviourPun
 
     private void ResetPlayer()
     {
+
+        if (!photonView.IsMine) return; 
+
         m_health.Heal(float.MaxValue);
-        // Reequip!! 
-        Debug.LogWarning("Reset Player not implemented yet!");
+        //var swordObj = ItemSpawner.Instance.SpawnItem("Weapons\\Metal Sword", transform.position, Quaternion.identity);
+        //var shieldObj = ItemSpawner.Instance.SpawnItem("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
+        
+        var inv = GetComponent<Inventory>();
+
+        var swordObj = PhotonNetwork.Instantiate("Weapons\\Metal Sword", transform.position, Quaternion.identity);
+        inv.TryPickUp();
+        var shieldObj = PhotonNetwork.Instantiate("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
+        inv.TryPickUp();
+
+        //var sword = swordObj.GetComponent<ItemPickUp>();
+        //var shield = shieldObj.GetComponent<ItemPickUp>();
+
+        //sword.PickUp(gameObject);
+        //shield.PickUp(gameObject);
     }
 
     private void ReenablePlayer()
     {
-        Debug.LogWarning("ReenablePlayer not implemented yet!");
+        m_characterController.enabled = true;
+        m_collider.enabled = true;
         m_model.SetActive(true);
     }
 
     private void DisablePlayer()
     {
         m_model.SetActive(false);
-        Debug.LogWarning("DisablePlayer not implemented yet!");
+        m_collider.enabled = false;
+        m_characterController.enabled = false;
     }
 
     public GameObject GetModel() => m_model;

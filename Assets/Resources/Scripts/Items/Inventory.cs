@@ -112,7 +112,7 @@ public class Inventory : MonoBehaviour, IDestructible
     #endregion
     #region Pick Up Functionality
 
-    private void TryPickUp()
+    public void TryPickUp()
     {
         if (!m_photonView.IsMine) return;
 

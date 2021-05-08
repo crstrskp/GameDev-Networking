@@ -60,7 +60,6 @@ public class ItemPickUp : MonoBehaviour
         var dir = Owner.GetComponent<PlayerHandler>().GetModel().transform.forward;
         m_rigidbody.AddForce(dir * m_throwForce, ForceMode.Impulse);
 
-        Debug.LogWarning("FIX Torque on throw");
         m_rigidbody.AddRelativeTorque(-transform.forward * 2000, ForceMode.Impulse);
 
         transform.up = -transform.up;
@@ -78,7 +77,7 @@ public class ItemPickUp : MonoBehaviour
 
         if (AttackActive == false) return;
             
-        ApplyMeleeAttack(col.gameObject, m_baseDamage);
+        ApplyAttack(col.gameObject, m_baseDamage);
     }
 
     /// <summary>
@@ -89,15 +88,14 @@ public class ItemPickUp : MonoBehaviour
     {
         if (!m_beingThrown) return;
 
-        ApplyMeleeAttack(col.gameObject, m_baseDamage * 2);
+        ApplyAttack(col.gameObject, m_baseDamage * 2);
         m_beingThrown = false;
         Owner = null;
     }
 
-    private void ApplyMeleeAttack(GameObject col, int dmg)
+    private void ApplyAttack(GameObject col, int dmg)
     {
         var attackable = col.GetComponent<IAttackable>();
-
         if (attackable == null) return;
 
         var isCritical = DetermineCritical();
