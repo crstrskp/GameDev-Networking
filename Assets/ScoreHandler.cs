@@ -14,9 +14,4 @@ public class ScoreHandler : MonoBehaviourPun
         PlayerCustomProps["Death"] = 0;
         PhotonNetwork.SetPlayerCustomProperties(PlayerCustomProps);
     }
-
-    private void TestMethod()
-    {
-        PhotonNetwork
-    }
 }
