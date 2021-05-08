@@ -1,47 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5159276173641666964
-MonoBehaviour:
+--- !u!1 &4823923567621949774
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6520848173819532308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 4600432114919942753}
-  - {fileID: 7646043694678200841}
-  - {fileID: 5751729909622442577}
-  - {fileID: 8125395456008178206}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &7646043694678200841
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2179980593623704312}
+  m_Layer: 0
+  m_Name: HandHoldPointLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2179980593623704312
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6520848173819532308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
+  m_GameObject: {fileID: 4823923567621949774}
+  m_LocalRotation: {x: 0.7070361, y: 0.012211386, z: 0.010035737, w: -0.7070008}
+  m_LocalPosition: {x: -0.08596724, y: -0.01351062, z: 0.018204166}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3823028169772459758}
+  m_Father: {fileID: 5707873767458495122}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 269.823, y: 88.169, z: -89.97299}
 --- !u!114 &5751729909622442577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,37 +115,48 @@ MonoBehaviour:
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
---- !u!1 &4823923567621949774
-GameObject:
+--- !u!114 &5159276173641666964
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2179980593623704312}
-  m_Layer: 0
-  m_Name: HandHoldPointLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2179980593623704312
-Transform:
+  m_GameObject: {fileID: 6520848173819532308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4600432114919942753}
+  - {fileID: 7646043694678200841}
+  - {fileID: 5751729909622442577}
+  - {fileID: 8125395456008178206}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &7646043694678200841
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4823923567621949774}
-  m_LocalRotation: {x: 0.7070361, y: 0.012211386, z: 0.010035737, w: -0.7070008}
-  m_LocalPosition: {x: -0.08596724, y: -0.01351062, z: 0.018204166}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3823028169772459758}
-  m_Father: {fileID: 5707873767458495122}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 269.823, y: 88.169, z: -89.97299}
+  m_GameObject: {fileID: 6520848173819532308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!1 &7835027564252204652
 GameObject:
   m_ObjectHideFlags: 0
