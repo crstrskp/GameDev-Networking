@@ -14,7 +14,7 @@ public class PlayerAttackInput : MonoBehaviourPun
 
     public event Action PickUp;
     public event Action DropEquipped;
-    public event Action ThrowEquipped;
+    public event Action Throw;
 
     public event Action ShowScoreStart;
     public event Action ShowScoreEnd;
@@ -88,7 +88,7 @@ public class PlayerAttackInput : MonoBehaviourPun
 
         if (Input.GetMouseButtonUp(2))
         {
-            ThrowEquipped?.Invoke();
+            Throw?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))

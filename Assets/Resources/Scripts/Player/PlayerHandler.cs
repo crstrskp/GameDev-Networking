@@ -8,23 +8,28 @@ public class PlayerHandler : MonoBehaviourPun
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
-    public GameObject PlayerObject;
     public GameObject PlayerHealthDisplayGO;
 
     [SerializeField] private float m_respawnTime = 2.5f;
     [SerializeField] private GameObject m_cameraPrefab;
+    [SerializeField] private GameObject m_model;
+    [SerializeField] private Health m_health;
+
+    private Collider m_collider;
+    private CharacterController m_characterController; 
 
     private GameObject m_camera;
-    private int m_playerObjectViewId;
+    
 
     private void Awake() 
     {
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            photonView.RPC("SetParentOfPlayerModel", RpcTarget.All, PlayerObject.GetPhotonView().ViewID);
         }
 
+        m_collider = GetComponent<Collider>();
+        m_characterController = GetComponent<CharacterController>();
         // #Critical
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
         DontDestroyOnLoad(gameObject);
@@ -40,22 +45,11 @@ public class PlayerHandler : MonoBehaviourPun
 
     private void LateUpdate()
     {
-        if (PlayerObject == null)
-        {
-            // This is terrible design! 
-            // TODO: ensure PlayerObject is set, prior to all clients receiving a call to update it!
-            photonView.RPC("SetPlayerObject", RpcTarget.All);
-            if (PlayerObject == null)
-                Debug.Log("PlayerObject could not be found.");
-        }
-        else
-        {
-            if (PlayerHealthDisplayGO == null) return; 
+        if (PlayerHealthDisplayGO == null) return; 
 
-            if (PlayerHealthDisplayGO.activeSelf) return;
+        if (PlayerHealthDisplayGO.activeSelf) return;
 
-            PlayerHealthDisplayGO.SetActive(true);
-        }
+        PlayerHealthDisplayGO.SetActive(true);
     }
 
     private void CreatePlayerCamera()
@@ -65,23 +59,11 @@ public class PlayerHandler : MonoBehaviourPun
             if (m_camera != null) return;
 
             this.m_camera = Instantiate(this.m_cameraPrefab, transform);
-            m_camera.GetComponent<WowCamera>().Target = PlayerObject.transform;
+            this.m_camera.GetComponent<WowCamera>().Target = transform;
         }
         else 
         {
             Debug.LogWarning("Missing PlayerCamera reference on player prefab.", this);
-        }
-    }
-
-    public void SpawnPlayer()
-    {
-        if (photonView.IsMine)
-        {
-            var spawnPos = new Vector3(10, 10, 0);
-            GameObject player = PhotonNetwork.Instantiate("PlayerPun", spawnPos, Quaternion.identity);
-            photonView.RPC("SetParentOfPlayerModel", RpcTarget.All, player.GetPhotonView().ViewID);
-
-            m_camera.GetComponent<WowCamera>().Target = player.transform;
         }
     }
 
@@ -98,33 +80,19 @@ public class PlayerHandler : MonoBehaviourPun
             return;
         }
 
-        if (PlayerObject == null) return;
-
         var playerHealthDisplay = PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
-        playerHealthDisplay.SetTarget(PlayerObject);
+        playerHealthDisplay.SetTarget(gameObject);
         playerHealthDisplay.gameObject.SetActive(true);
     }
 
     [PunRPC]
-    private void SetPlayerObject()
+    public void PlayerDeath()
     {
-        PhotonView playerView = PhotonView.Find(m_playerObjectViewId);
-
-        if (playerView != null)
-            PlayerObject = PhotonView.Find(m_playerObjectViewId).gameObject;
+        DisablePlayer();
+        DelayedRespawn();
     }
 
-    [PunRPC]
-    private void SetParentOfPlayerModel(int viewId)
-    {
-        m_playerObjectViewId = viewId;
-
-        var go = PhotonView.Find(viewId).transform;
-        go.SetParent(transform);
-    }
-
-    [PunRPC]
-    public void DelayedRespawn()
+    private void DelayedRespawn()
     {
         DeactivateUI();
         StartCoroutine(SpawnAfterDelay(m_respawnTime));
@@ -132,9 +100,48 @@ public class PlayerHandler : MonoBehaviourPun
 
     private IEnumerator SpawnAfterDelay(float delay)
     {
-
         yield return new WaitForSeconds(delay);
-        SpawnPlayer();
+        ResetPlayer();
+        ReenablePlayer();
         ReactivateUI();
     }
+
+    private void ResetPlayer()
+    {
+
+        if (!photonView.IsMine) return; 
+
+        m_health.Heal(float.MaxValue);
+        //var swordObj = ItemSpawner.Instance.SpawnItem("Weapons\\Metal Sword", transform.position, Quaternion.identity);
+        //var shieldObj = ItemSpawner.Instance.SpawnItem("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
+        
+        var inv = GetComponent<Inventory>();
+
+        var swordObj = PhotonNetwork.Instantiate("Weapons\\Metal Sword", transform.position, Quaternion.identity);
+        inv.TryPickUp();
+        var shieldObj = PhotonNetwork.Instantiate("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
+        inv.TryPickUp();
+
+        //var sword = swordObj.GetComponent<ItemPickUp>();
+        //var shield = shieldObj.GetComponent<ItemPickUp>();
+
+        //sword.PickUp(gameObject);
+        //shield.PickUp(gameObject);
+    }
+
+    private void ReenablePlayer()
+    {
+        m_characterController.enabled = true;
+        m_collider.enabled = true;
+        m_model.SetActive(true);
+    }
+
+    private void DisablePlayer()
+    {
+        m_model.SetActive(false);
+        m_collider.enabled = false;
+        m_characterController.enabled = false;
+    }
+
+    public GameObject GetModel() => m_model;
 }

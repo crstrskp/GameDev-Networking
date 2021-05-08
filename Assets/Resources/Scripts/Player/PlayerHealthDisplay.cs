@@ -67,11 +67,11 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     /// </summary>
     void LateUpdate () 
     {
-        if (targetTransform == null && m_playerHandler != null)
-        {
-            if (m_playerHandler.PlayerObject != null)
-                targetTransform = m_playerHandler.PlayerObject.transform;
-        }
+        //if (targetTransform == null && m_playerHandler != null)
+        //{
+        //    if (m_playerHandler.PlayerObject != null)
+        //        targetTransform = m_playerHandler.PlayerObject.transform;
+        //}
 
         if (!m_health) InitHealth();
 
@@ -111,7 +111,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
             return;
         }
 
-        m_playerHandler = _target.transform.parent.GetComponent<PlayerHandler>();
+        m_playerHandler = _target.transform.GetComponent<PlayerHandler>();
         
         // Cache references for efficiency because we are going to reuse them.
         targetTransform = _target.GetComponent<Transform>();

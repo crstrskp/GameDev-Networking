@@ -5,7 +5,7 @@ public class UIHandler : MonoBehaviour
 {
     [SerializeField] private GameObject m_playerUIPrefab;
     [SerializeField] private Health m_health;
-    public PlayerHealthDisplay playerHealthDisplay;
+    [HideInInspector] public PlayerHealthDisplay playerHealthDisplay;
 
     public Health GetHealth() => m_health;
 
@@ -14,7 +14,7 @@ public class UIHandler : MonoBehaviour
     private void LateUpdate()
     {
         if (!m_playerHandler)
-            m_playerHandler = transform.parent.GetComponent<PlayerHandler>();
+            m_playerHandler = transform.GetComponent<PlayerHandler>();
 
         if (m_playerHandler.PlayerHealthDisplayGO == null)
         {
@@ -25,6 +25,10 @@ public class UIHandler : MonoBehaviour
 
         if (playerHealthDisplay == null)
         {
+            if (m_playerHandler == null) return;
+
+            if (m_playerHandler.PlayerHealthDisplayGO == null) return; 
+
             playerHealthDisplay = m_playerHandler.PlayerHealthDisplayGO.GetComponent<PlayerHealthDisplay>();
         }
     }
@@ -37,7 +41,7 @@ public class UIHandler : MonoBehaviour
             GameObject _uiGo = Instantiate(this.m_playerUIPrefab);
 
             if (!m_playerHandler)
-                m_playerHandler = transform.parent.GetComponent<PlayerHandler>();
+                m_playerHandler = transform.GetComponent<PlayerHandler>();
 
             m_playerHandler.PlayerHealthDisplayGO = _uiGo;
 

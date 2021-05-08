@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void Update() 
     {
+        if (!m_modelTransform.gameObject.activeSelf) return;
+
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
             return;
@@ -87,19 +89,19 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void YOrientation()
     {
-        if (Input.GetKey(KeyCode.Q))
-        {
-            Rotate(true);
-        }
-        else if (Input.GetKey(KeyCode.E))
-        {
-            Rotate(false);
-        }
-        else 
-        {
+        //if (Input.GetKey(KeyCode.Q))
+        //{
+        //    Rotate(true);
+        //}
+        //else if (Input.GetKey(KeyCode.E))
+        //{
+        //    Rotate(false);
+        //}
+        //else 
+        //{
             yaw += RotateSpeed * 0.035f * Input.GetAxis("Mouse X");
             transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
-        }
+        //}
     }
 
     private void AxesMovement()
@@ -145,13 +147,13 @@ public class PlayerMovement : MonoBehaviourPun
         velocity.y = Mathf.Sqrt(m_jumpHeight * -2f * gravity);
     }
 
-    private void Rotate(bool right)
-    {
-        int dir = right ? -1 : 1;
+    //private void Rotate(bool right)
+    //{
+    //    int dir = right ? -1 : 1;
 
-        yaw += RotateSpeed * 0.035f * dir;
-        transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
-    }
+    //    yaw += RotateSpeed * 0.035f * dir;
+    //    transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+    //}
     
     private void SetModelRotation(Vector3 v)
     {
@@ -169,7 +171,7 @@ public class PlayerMovement : MonoBehaviourPun
             }
             else
             {
-                m_modelTransform.localRotation = Quaternion.identity; 
+                m_modelTransform.localRotation = Quaternion.identity;
             }
         }
         else 
@@ -188,9 +190,9 @@ public class PlayerMovement : MonoBehaviourPun
     {
         if (m_playerCamera != null) return;
 
-        if (transform.parent == null) return;
+        //if (transform.parent == null) return;
 
-        m_playerCamera = transform.parent.GetComponentInChildren<Camera>();
+        m_playerCamera = transform.GetComponentInChildren<Camera>();
     }
     
     private void OnDrawGizmos() 

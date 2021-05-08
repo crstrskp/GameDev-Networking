@@ -65,8 +65,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_anim: {fileID: 8033221010945888524}
-  playerMovement: {fileID: 8034023350072734894}
-  playerAttack: {fileID: 379943945}
+  m_playerMovement: {fileID: 0}
+  m_playerAttackInput: {fileID: 0}
+  m_playerWeaponHandler: {fileID: 0}
 --- !u!1 &8034023350072734895
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,8 +81,14 @@ GameObject:
   - component: {fileID: 466862117698378673}
   - component: {fileID: 8034023350072734894}
   - component: {fileID: 379943945}
+  - component: {fileID: 2590228769440780220}
+  - component: {fileID: 551033626820089785}
+  - component: {fileID: 1272321035123663679}
+  - component: {fileID: 781416130623949530}
+  - component: {fileID: 2600123405378245018}
+  - component: {fileID: 9160008763348968065}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_nonNetworked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,6 +173,110 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9248417010f44994f9e37ec4894aed10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2590228769440780220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034023350072734895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f261d7ea91c18bc4fadc0bd773082956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerObject: {fileID: 0}
+  PlayerHealthDisplayGO: {fileID: 0}
+  m_respawnTime: 2.5
+  m_cameraPrefab: {fileID: 0}
+--- !u!114 &551033626820089785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034023350072734895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3accdcf0e6f0f54d9e172702bea7cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickUpLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_pickUpRadius: 2
+  m_playerAttackInput: {fileID: 379943945}
+  m_playerWeaponHandler: {fileID: 0}
+  m_photonView: {fileID: 0}
+  LeftHandTransform: {fileID: 0}
+  RightHandTransform: {fileID: 0}
+  WeaponSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ShieldSlot: {fileID: 0}
+--- !u!114 &1272321035123663679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034023350072734895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e8c26a9b55333418b0ac5c4d792d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerUIPrefab: {fileID: 170056, guid: 1fa7389f427a9bf49a6c7077a26ba259, type: 3}
+  m_health: {fileID: 0}
+  playerHealthDisplay: {fileID: 0}
+--- !u!114 &781416130623949530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034023350072734895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d108972c6cf792e488b3f94307a38871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentHealth: 100
+  m_maxHealth: 100
+--- !u!114 &2600123405378245018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034023350072734895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6468637579adf348b12387929919137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RagdollObject: {fileID: 7663426384662924027, guid: 5f8608074d02b8447a0137cd4c1b741b, type: 3}
+  Force: 250
+  Lift: 1.5
+--- !u!114 &9160008763348968065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034023350072734895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26fd3ae2efd08742accfcf2f1addf93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerAttackInput: {fileID: 379943945}
+  m_animHandler: {fileID: 8033221010945888525}
+  EquippedWeapon: {fileID: 0}
+  EquippedShield: {fileID: 0}
+  IsAttacking: 0
 --- !u!1001 &4915112645673968006
 PrefabInstance:
   m_ObjectHideFlags: 0

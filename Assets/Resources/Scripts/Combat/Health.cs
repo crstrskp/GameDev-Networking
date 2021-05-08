@@ -10,13 +10,18 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
 
     [SerializeField] private int m_currentHealth;
     [SerializeField] private int m_maxHealth = 100;
+    [SerializeField] private bool m_invulnerable = false;
+
 
     public int GetCurrentHealth() => m_currentHealth;
     public int GetMaxHealth() => m_maxHealth;
 
-    private void Awake()
+    private void OnEnable()
     {
+        
         if (!photonView.IsMine) return;
+
+        m_invulnerable = false;
 
         m_currentHealth = m_maxHealth;
         HealthChanged?.Invoke(m_currentHealth, m_maxHealth);
@@ -56,23 +61,27 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
     {
         if (attacker == gameObject) return; // can't hit self. 
 
+        if (m_invulnerable) return;
+
         TakeDamage(attack.Damage);
 
         if (m_currentHealth <= 0)
         {
-            // Destroy Object
             var destructibles = GetComponents(typeof(IDestructible));
             foreach (IDestructible d in destructibles)
                 d.OnDestruction(attacker);
 
-            var playerHandler = transform.parent.GetComponent<PlayerHandler>();
+            var playerHandler = transform.GetComponent<PlayerHandler>();
+
+            if (playerHandler == null) return;
 
             if (!photonView.IsMine) return;
 
-            playerHandler.photonView.RPC("DelayedRespawn", RpcTarget.All);
 
-            photonView.isRuntimeInstantiated = false;
-            PhotonNetwork.Destroy(gameObject);
+            playerHandler.photonView.RPC("PlayerDeath", RpcTarget.All);
         }
     }
+
+    public bool Invulnerable() => m_invulnerable;
+    public bool Invulnerable(bool b) => m_invulnerable = b; 
 }

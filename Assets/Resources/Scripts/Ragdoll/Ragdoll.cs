@@ -12,6 +12,6 @@ public class Ragdoll : MonoBehaviour
 
     public void ApplyForce(Vector3 force)
     {
-        RagdollCore.AddForce(force);
+        RagdollCore.AddForce(force, ForceMode.Impulse);
     }
 }
