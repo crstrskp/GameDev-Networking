@@ -36,7 +36,7 @@ public class PlayerHealthDisplay : MonoBehaviourPun
     {
         if (m_playerHandler == null)
         {
-            Debug.LogError($"InitHealth(): PlayerHandler not found");
+            Debug.LogWarning($"InitHealth(): PlayerHandler not found");
             return;
         }
         

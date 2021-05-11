@@ -76,9 +76,15 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable, IAttackable
             if (playerHandler == null) return;
 
             if (!photonView.IsMine) return;
-
-
+            
             playerHandler.photonView.RPC("PlayerDeath", RpcTarget.All);
+
+            //var attackerScore = attacker.GetComponent<PlayerScore>();
+            Debug.Log($"Should be adding kill to {attacker.GetComponent<PhotonView>().Owner.NickName}");
+            attacker.GetComponent<PhotonView>().RPC("AddKillScore", RpcTarget.All);
+            //if (attackerScore == null) return;
+
+            //attackerScore.AddKill();
         }
     }
 
