@@ -20,13 +20,6 @@ public class ScoreHandler : MonoBehaviourPun
         PlayerCustomProps.Add("Deaths", playerStats.GetDeaths());
 
         PhotonNetwork.SetPlayerCustomProperties(PlayerCustomProps);
-
-        GetStuff();
     }
 
-    public void GetStuff()
-    {
-        Debug.Log(PlayerCustomProps.Count);
-        Debug.Log(PlayerCustomProps["Kills"]);
-    }
 }
