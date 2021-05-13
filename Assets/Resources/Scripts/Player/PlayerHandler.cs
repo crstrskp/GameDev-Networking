@@ -108,25 +108,33 @@ public class PlayerHandler : MonoBehaviourPun
 
     private void ResetPlayer()
     {
-
-        if (!photonView.IsMine) return; 
+        if (!photonView.IsMine) return;
 
         m_health.Heal(float.MaxValue);
-        //var swordObj = ItemSpawner.Instance.SpawnItem("Weapons\\Metal Sword", transform.position, Quaternion.identity);
-        //var shieldObj = ItemSpawner.Instance.SpawnItem("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
-        
+
+        Restock();
+
+        SetSpawnPoint();
+    }
+
+    private void SetSpawnPoint()
+    {
+        Debug.LogWarning("Refactor: RespawnPoints should be singleton");
+        var spawnPoint = GameObject.Find("RespawnPoints").GetComponent<RespawnPoints>().GetSpawnPoint();
+
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+    }
+
+    private void Restock()
+    {
+        Debug.LogWarning("Refactor Restock method!");
         var inv = GetComponent<Inventory>();
 
-        var swordObj = PhotonNetwork.Instantiate("Weapons\\Metal Sword", transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate("Weapons\\Metal Sword", transform.position, Quaternion.identity);
         inv.TryPickUp();
-        var shieldObj = PhotonNetwork.Instantiate("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate("Weapons\\Wooden Shield", transform.position, Quaternion.identity);
         inv.TryPickUp();
-
-        //var sword = swordObj.GetComponent<ItemPickUp>();
-        //var shield = shieldObj.GetComponent<ItemPickUp>();
-
-        //sword.PickUp(gameObject);
-        //shield.PickUp(gameObject);
     }
 
     private void ReenablePlayer()
