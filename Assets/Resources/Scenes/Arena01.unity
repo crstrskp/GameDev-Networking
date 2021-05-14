@@ -1009,18 +1009,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -7788848061548957378, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -7788848061548957378, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_AngularDrag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -3379176934414956505, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: sceneViewId
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 1268586503670676, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
       propertyPath: m_Name
       value: Metal Mace
@@ -1067,30 +1055,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4187550195709108, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6088025353560371244, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_Height
-      value: 0.84536576
-      objectReference: {fileID: 0}
-    - target: {fileID: 6088025353560371244, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_Radius
-      value: 0.0626009
-      objectReference: {fileID: 0}
-    - target: {fileID: 6088025353560371244, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_Center.x
-      value: 0.0013315193
-      objectReference: {fileID: 0}
-    - target: {fileID: 6088025353560371244, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_Center.y
-      value: 0.23614877
-      objectReference: {fileID: 0}
-    - target: {fileID: 6088025353560371244, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_Center.z
-      value: 0.0021191444
-      objectReference: {fileID: 0}
-    - target: {fileID: 6088025353560371244, guid: 15bcb5efcdde02c43a1f3b9c5ff83565, type: 3}
-      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2107,10 +2071,6 @@ PrefabInstance:
     - target: {fileID: 4683953496747004, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5610450802099872792, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
-      propertyPath: sceneViewId
-      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 944fc80616e7ee844bc7a8f312cd5b6a, type: 3}
@@ -3256,6 +3216,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2062194346, guid: f7a64625aeaefad4093bd85bb5fb491f, type: 3}
+      propertyPath: m_criticalHitChance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1990868044218892, guid: f7a64625aeaefad4093bd85bb5fb491f, type: 3}
       propertyPath: m_Name
       value: Spiked Hammer
