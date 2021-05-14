@@ -23,7 +23,11 @@ public class ScoreDisplayHandler : MonoBehaviour
 
     private void Start()
     {
-        m_playerAttackInput = PlayerHandler.LocalPlayerInstance.GetComponent<PlayerAttackInput>();
+        var localPlayer = PlayerHandler.LocalPlayerInstance;
+
+        if (localPlayer == null) return;
+
+        m_playerAttackInput = localPlayer.GetComponent<PlayerAttackInput>();
 
         m_playerAttackInput.ShowScoreStart += ShowScoreStart;
         m_playerAttackInput.ShowScoreEnd += ShowScoreEnd;
@@ -33,6 +37,8 @@ public class ScoreDisplayHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (m_playerAttackInput == null) return; 
+
         m_playerAttackInput.ShowScoreStart -= ShowScoreStart;
         m_playerAttackInput.ShowScoreEnd -= ShowScoreEnd;
     }

@@ -8,9 +8,11 @@ public class ScoreHandler : MonoBehaviourPun
     public ExitGames.Client.Photon.Hashtable PlayerCustomProps = new ExitGames.Client.Photon.Hashtable();
     public void Start()
     {
-        //if (!photonView.IsMine) return;
+        var localPlayer = PlayerHandler.LocalPlayerInstance;
 
-        var view = PlayerHandler.LocalPlayerInstance.GetComponent<PhotonView>();
+        if (localPlayer == null) return;
+
+        var view = localPlayer.GetComponent<PhotonView>();
         if (!view.IsMine) return; 
         
         var playerStats = PlayerHandler.LocalPlayerInstance.GetComponent<PlayerScore>();
