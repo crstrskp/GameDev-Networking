@@ -27,26 +27,33 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField] private int m_baseDamage = 15;
     [SerializeField] private int m_criticalHitChance = 15;
 
-    [SerializeField] private Collider m_hitCollider;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_throwForce;
 
+    private Collider[] m_colliders;
     private bool m_beingThrown = false;
+
+    private void Awake()
+    {
+        m_colliders = GetComponentsInChildren<Collider>();
+    }
 
     public void Drop()
     {
         m_rigidbody.isKinematic = false;
         transform.parent = null;
         Owner = null;
-        m_hitCollider.isTrigger = false;
+        SetCollidersAsTriggers(false);
+        
         gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
     }
+
 
     public void PickUp(GameObject owner)
     {
         gameObject.layer = LayerMask.NameToLayer("OwnedItem");
         m_rigidbody.isKinematic = true;
-        m_hitCollider.isTrigger = true;
+        SetCollidersAsTriggers(true);
         Owner = owner;
     }
 
@@ -54,9 +61,8 @@ public class ItemPickUp : MonoBehaviour
     {
         m_rigidbody.isKinematic = false;
         transform.parent = null;
-        m_hitCollider.isTrigger = false;
+        SetCollidersAsTriggers(false);
         gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
-
 
         var dir = Owner.GetComponent<PlayerHandler>().GetModel().transform.forward;
         m_rigidbody.AddForce(dir * m_throwForce, ForceMode.Impulse);
@@ -104,6 +110,14 @@ public class ItemPickUp : MonoBehaviour
         var attack = new Attack(dmg, isCritical);
 
         attackable.OnAttack(Owner, attack);
+    }
+
+    private void SetCollidersAsTriggers(bool v)
+    {
+        foreach (var col in m_colliders)
+        {
+            col.isTrigger = v;
+        }
     }
 
     private bool DetermineCritical() => (UnityEngine.Random.Range(0, 100) < m_criticalHitChance);
