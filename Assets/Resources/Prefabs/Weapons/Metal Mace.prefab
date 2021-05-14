@@ -121,9 +121,8 @@ MonoBehaviour:
   AttackActive: 0
   m_baseDamage: 18
   m_criticalHitChance: 10
-  m_hitCollider: {fileID: 6088025353560371244}
   m_rigidbody: {fileID: -7788848061548957378}
-  m_throwForce: 20
+  m_throwForce: 24
 --- !u!54 &-7788848061548957378
 Rigidbody:
   m_ObjectHideFlags: 0

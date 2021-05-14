@@ -133,9 +133,8 @@ MonoBehaviour:
   Owner: {fileID: 0}
   WeaponSlotKey: 1
   AttackActive: 0
-  m_baseDamage: 22
-  m_criticalHitChance: 5
-  m_hitCollider: {fileID: 7838039894393757175}
+  m_baseDamage: 25
+  m_criticalHitChance: 6
   m_rigidbody: {fileID: 2062194345}
   m_throwForce: 15
 --- !u!54 &2062194345
