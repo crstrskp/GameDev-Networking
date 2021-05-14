@@ -27,6 +27,7 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField] private int m_baseDamage = 15;
     [SerializeField] private int m_criticalHitChance = 15;
 
+    [SerializeField] private Collider m_hitCollider;
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_throwForce;
 
@@ -37,7 +38,7 @@ public class ItemPickUp : MonoBehaviour
         m_rigidbody.isKinematic = false;
         transform.parent = null;
         Owner = null;
-        GetComponent<Collider>().isTrigger = false;
+        m_hitCollider.isTrigger = false;
         gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
     }
 
@@ -45,7 +46,7 @@ public class ItemPickUp : MonoBehaviour
     {
         gameObject.layer = LayerMask.NameToLayer("OwnedItem");
         m_rigidbody.isKinematic = true;
-        GetComponent<Collider>().isTrigger = true;
+        m_hitCollider.isTrigger = true;
         Owner = owner;
     }
 
@@ -53,7 +54,7 @@ public class ItemPickUp : MonoBehaviour
     {
         m_rigidbody.isKinematic = false;
         transform.parent = null;
-        GetComponent<Collider>().isTrigger = false;
+        m_hitCollider.isTrigger = false;
         gameObject.layer = LayerMask.NameToLayer("ItemPickUp");
 
 
