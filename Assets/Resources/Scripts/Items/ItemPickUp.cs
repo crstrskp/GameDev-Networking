@@ -8,7 +8,7 @@ public class ItemPickUp : MonoBehaviour
     public enum ItemTypeDefinitions {  WEAPON, SHIELD, ARMOR, NA };
     public enum WeaponSubType { Melee, Ranged, Other, NA }
     //public enum WeaponEquipType { Sword, Mace, Axe, Sword2H, Mace2H, Axe2H, Bow, Spear }
-    public enum WeaponEquipType { OneHanded, TwoHanded, Bow, NA }
+    public enum WeaponEquipType { OneHanded, TwoHanded, TwoHandedSword, Bow, NA }
     public enum ItemArmorSubType { None, Head, Chest, Hands, Legs, Boots, NA };
 
     public ItemTypeDefinitions ItemType = ItemTypeDefinitions.WEAPON;
